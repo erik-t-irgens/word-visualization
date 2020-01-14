@@ -70,7 +70,7 @@ class GraphTurorial extends React.Component {
                 }}
             >
                 <Button
-                    color="gray"
+                    color="grey"
                     inverted
                     size='mini'
                     animated='vertical'
