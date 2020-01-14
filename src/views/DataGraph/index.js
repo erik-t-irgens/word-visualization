@@ -161,7 +161,8 @@ class SigmaComponent extends React.Component {
                             font: "arial",
                         }}
                         style={{
-                            maxWidth: "100vw",
+                            width: "100vw",
+                            position: "absolute",
                             // Height of the graph port to accomodate for the header
                             height: "88vh"
                         }}
@@ -180,12 +181,11 @@ class SigmaComponent extends React.Component {
                                 <ForceAtlas2
                                     background
                                     easing="cubicInOut"
-                                    startingIterations={2}
-                                    iterationsPerRender={2}
+                                    iterationsPerRender={1}
                                     scalingRatio={1}
                                     scaleNodes={4}
                                     linLogMode
-                                    timeout={100000}
+                                    timeout={1000}
                                     worker
                                     slowDown={1}
                                 />

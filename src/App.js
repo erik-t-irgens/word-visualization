@@ -8,6 +8,7 @@ import { Container } from "semantic-ui-react";
 import NotFound from './SharedComponents/NotFound'
 import Dashboard from './views/Dashboard';
 import DataGraph from './views/DataGraph';
+import Header from './SharedComponents/Header'
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
 
-
+            <Header />
 
             <Container fluid style={{ padding: '0 1em' }}>
               <Switch>
