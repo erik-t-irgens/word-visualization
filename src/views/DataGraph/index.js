@@ -71,7 +71,7 @@ class SigmaComponent extends React.Component {
     }
 
     componentDidMount = () => {
-        document.body.style.backgroundColor = "#1c1c1c";
+        document.body.style.backgroundColor = "#000";
         // Hides the Add Node button when clicking anywhere else on the canvas.
         document.getElementById("sigma-wrapper").addEventListener("mousedown", (e) => this.handleHideNodeButton(e))
     }

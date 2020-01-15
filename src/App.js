@@ -33,7 +33,7 @@ class App extends Component {
             <Container fluid style={{ padding: '0 1em' }}>
               <Switch>
                 {/* NOTE: greedy paths by default apparently. */}
-                <Route exact path={'/'} component={Dashboard} />
+                <Route exact path={'/dashboard'} component={Dashboard} />
 
                 <Route path={'/DataGraph/'} component={DataGraph} />
                 <Route path={'/'} status={404} component={NotFound} />
