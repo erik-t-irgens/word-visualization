@@ -12,6 +12,8 @@
     "@testing-library/user-event": "^7.2.1",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.17",
+    "google-trends-api": "^4.9.0",
+    "https-proxy-agent": "^4.0.0",
     "keyboard-key": "^1.0.4",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",

@@ -10,9 +10,11 @@ import NodeCreationForm from "./components/NodeCreationForm";
 import AddNode from "./components/AddNode";
 import GraphOptions from "./components/GraphOptions";
 import GraphTutorial from "./components/GraphTutorial/index";
+import FindWordData from "./components/FindWordData"
 // Redux
 import { addNode, removeNode, updateNode, addGraphFilter, clearGraphFilter } from "../../actions/index";
 import { connect } from "react-redux";
+import { Search } from 'semantic-ui-react';
 
 class SigmaComponent extends React.Component {
     constructor(props) {
@@ -69,6 +71,7 @@ class SigmaComponent extends React.Component {
     handleCloseNodeSummary = () => {
         this.setState({ summaryVisible: false, nodeData: null })
     }
+
 
     componentDidMount = () => {
         document.body.style.backgroundColor = "#000";
@@ -142,7 +145,7 @@ class SigmaComponent extends React.Component {
                             edgeLabelThreshold: 5,
                             defaultEdgeLabelColor: "#d8d8d8",
 
-                            minNodeSize: 20,
+                            minNodeSize: 5,
                             maxNodeSize: 30,
                             minEdgeSize: 5,
                             maxEdgeSize: 5,
@@ -211,7 +214,9 @@ class SigmaComponent extends React.Component {
                             />
                         }
                         <GraphTutorial />
+
                         <GraphOptions handleEditMode={this.handleEditMode} handleChangeFilter={this.handleChangeFilter} />
+                        <FindWordData></FindWordData>
 
                         {filter.id ?
 
