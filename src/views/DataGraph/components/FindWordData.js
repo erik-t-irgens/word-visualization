@@ -80,15 +80,18 @@ class FindWordData extends React.Component {
         if (this.state.rhymes && this.state.rhymes.length > 0) {
             this.state.rhymes.forEach((word) => {
                 this.delay(100)
+                console.log(word)
                 this.props.addNode({
                     node: {
                         id: word.word,
                         label: word.word,
                         type: 'circle',
-                        size: 1,
+                        size: word.score / 1000,
                         color: "#66ffcc",
                         x: 0,
-                        y: 0
+                        y: 0,
+                        score: word.score,
+                        syllables: word.numSylables
                     },
                     edge: {
                         id: word.word + 'edge' + 'rhymes',
@@ -133,10 +136,12 @@ class FindWordData extends React.Component {
                         id: word.word,
                         label: word.word,
                         type: 'circle',
-                        size: 1,
+                        size: word.score / 1000,
                         color: "#ffcc66",
                         x: 0,
-                        y: 0
+                        y: 0,
+                        score: word.score,
+                        syllables: word.numSylables
                     },
                     edge: {
                         id: word.word + 'edge' + 'associated',
@@ -180,10 +185,12 @@ class FindWordData extends React.Component {
                         id: word.word,
                         label: word.word,
                         type: 'circle',
-                        size: 1,
+                        size: word.score / 1000,
                         color: "#ff6666",
                         x: 0,
-                        y: 0
+                        y: 0,
+                        score: word.score,
+                        syllables: word.numSylables
                     },
                     edge: {
                         id: word.word + 'edge' + 'antonyms',
@@ -221,17 +228,19 @@ class FindWordData extends React.Component {
 
         if (this.state.synonyms && this.state.synonyms.length > 0) {
             this.state.synonyms.forEach((word) => {
-                let i = 0
+
                 this.delay(100)
                 this.props.addNode({
                     node: {
                         id: word.word,
                         label: word.word,
                         type: 'circle',
-                        size: 1,
+                        size: word.score / 1000,
                         color: "#6699ff",
-                        x: i,
-                        y: i
+                        x: 0,
+                        y: 0,
+                        score: word.score,
+                        syllables: word.numSylables
                     },
                     edge: {
                         id: word.word + 'edge' + 'SYNONYMS',
@@ -239,7 +248,7 @@ class FindWordData extends React.Component {
                         target: word.word
                     }
                 });
-                i = i + 1
+
             })
         }
     }
