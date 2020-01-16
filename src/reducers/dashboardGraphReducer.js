@@ -134,144 +134,144 @@ const initialState = {
             [
                 {
                     "id": "customer",
-                    "label": "Twitter Profile",
+                    "label": "You!",
                     "size": 8,
-                    "color": "#f8b000",
-                    "type": "star",
-                    "possibleChildren": [
-                        {
-                            "id": "firstparty",
-                            "label": "First Party",
-                            "size": 5,
-                            "party": 1,
-                            // "color": "#8ac44f",
-                            "color": "#8ac44f",
-                            "possibleChildren": [
-                                {
-                                    "id": "salesforce",
-                                    "label": "Salesforce",
-                                    "party": 1,
-                                    // "color": "#8ac44f",
-                                    "size": 3,
-                                    "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                                    "labelApiUrl": "placeholder"
-                                },
-                                {
-                                    "id": "zapier",
-                                    "label": "Zapier",
-                                    "party": 1,
-                                    // "color": "#8ac44f",
-                                    "size": 3,
-                                    "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                                    "labelApiUrl": "placeholder"
-                                }
-                            ],
-                            // 'x': 2,
-                            // 'y': 3,
-                            "type": "diamond",
-                            "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                            "labelApiUrl": "placeholder"
+                    "color": "#999999",
+                    "type": "square",
+                    // "possibleChildren": [
+                    //     {
+                    //         "id": "firstparty",
+                    //         "label": "First Party",
+                    //         "size": 5,
+                    //         "party": 1,
+                    //         // "color": "#8ac44f",
+                    //         "color": "#8ac44f",
+                    //         "possibleChildren": [
+                    //             {
+                    //                 "id": "salesforce",
+                    //                 "label": "Salesforce",
+                    //                 "party": 1,
+                    //                 // "color": "#8ac44f",
+                    //                 "size": 3,
+                    //                 "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //                 "labelApiUrl": "placeholder"
+                    //             },
+                    //             {
+                    //                 "id": "zapier",
+                    //                 "label": "Zapier",
+                    //                 "party": 1,
+                    //                 // "color": "#8ac44f",
+                    //                 "size": 3,
+                    //                 "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //                 "labelApiUrl": "placeholder"
+                    //             }
+                    //         ],
+                    //         // 'x': 2,
+                    //         // 'y': 3,
+                    //         "type": "diamond",
+                    //         "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //         "labelApiUrl": "placeholder"
 
-                        },
-                        {
-                            "id": "secondparty",
-                            "label": "Second Party",
-                            "party": 2,
-                            // "color": "#b43c7c",
-                            "color": " #b43c7c",
-                            "size": 5,
-                            "possibleChildren": [{
-                                "id": "scraper",
-                                "label": "Municipal Websites",
-                                "party": 2,
-                                // "color": "#b43c7c",
-                                "size": 3,
-                                "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                                "labelApiUrl": "placeholder"
-                            },],
-                            // 'x': 6,
-                            // 'y': 4,
-                            "type": "diamond",
-                            "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                            "labelApiUrl": "placeholder"
+                    //     },
+                    //     {
+                    //         "id": "secondparty",
+                    //         "label": "Second Party",
+                    //         "party": 2,
+                    //         // "color": "#b43c7c",
+                    //         "color": " #b43c7c",
+                    //         "size": 5,
+                    //         "possibleChildren": [{
+                    //             "id": "scraper",
+                    //             "label": "Municipal Websites",
+                    //             "party": 2,
+                    //             // "color": "#b43c7c",
+                    //             "size": 3,
+                    //             "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //             "labelApiUrl": "placeholder"
+                    //         },],
+                    //         // 'x': 6,
+                    //         // 'y': 4,
+                    //         "type": "diamond",
+                    //         "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //         "labelApiUrl": "placeholder"
 
-                        },
-                        {
-                            "id": "thirdparty",
-                            "label": "Third Party",
-                            "party": 3,
-                            "color": "#2e9ab8",
-                            // "color": "#2e9ab8",
-                            "size": 5,
-                            "possibleChildren": [
-                                {
-                                    "id": "us-epa",
-                                    "label": "US Environmental Protection Agency",
-                                    "party": 3,
-                                    // "color": "#2e9ab8",
-                                    "size": 3,
-                                    "possibleChildren": [{
-                                        "id": "srf",
-                                        "label": "State Revolving Fund",
-                                        "party": 3,
-                                        // "color": "#2e9ab8",
-                                        "size": 3,
-                                        "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                                        "labelApiUrl": "placeholder"
-                                    },
-                                    {
-                                        "id": "sdwis",
-                                        "label": "Safe Drinking Water Information System",
-                                        "party": 3,
-                                        // "color": "#2e9ab8",
-                                        "size": 3,
+                    //     },
+                    //     {
+                    //         "id": "thirdparty",
+                    //         "label": "Third Party",
+                    //         "party": 3,
+                    //         "color": "#2e9ab8",
+                    //         // "color": "#2e9ab8",
+                    //         "size": 5,
+                    //         "possibleChildren": [
+                    //             {
+                    //                 "id": "us-epa",
+                    //                 "label": "US Environmental Protection Agency",
+                    //                 "party": 3,
+                    //                 // "color": "#2e9ab8",
+                    //                 "size": 3,
+                    //                 "possibleChildren": [{
+                    //                     "id": "srf",
+                    //                     "label": "State Revolving Fund",
+                    //                     "party": 3,
+                    //                     // "color": "#2e9ab8",
+                    //                     "size": 3,
+                    //                     "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //                     "labelApiUrl": "placeholder"
+                    //                 },
+                    //                 {
+                    //                     "id": "sdwis",
+                    //                     "label": "Safe Drinking Water Information System",
+                    //                     "party": 3,
+                    //                     // "color": "#2e9ab8",
+                    //                     "size": 3,
 
-                                        "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                                        "labelApiUrl": "placeholder"
-                                    },
-                                    ],
-                                    // NOTE: This label could be dynamically generated by either going in and creating its own API call by using the same dashboardComponents apiUrl to get the same information, or we can create our own API call that gets only necessary information (if we only want to display S3 bucket size or EC2 instance statistics)
+                    //                     "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //                     "labelApiUrl": "placeholder"
+                    //                 },
+                    //                 ],
+                    //                 // NOTE: This label could be dynamically generated by either going in and creating its own API call by using the same dashboardComponents apiUrl to get the same information, or we can create our own API call that gets only necessary information (if we only want to display S3 bucket size or EC2 instance statistics)
 
-                                    "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                                    "labelApiUrl": "placeholder"
-                                },
-                                {
-                                    "id": "us-census",
-                                    "label": "US Census Department",
-                                    "party": 3,
-                                    // "color": "#2e9ab8",
-                                    "size": 3,
-                                    "possibleChildren": [{
-                                        "id": "us-commerce",
-                                        "label": "US Department of Commerce",
-                                        "party": 3,
-                                        // "color": "#2e9ab8",
-                                        "size": 3,
-                                        "possibleChildren": [{
-                                            "id": "finest",
-                                            "label": "State & Local Finances",
-                                            "party": 3,
-                                            // "color": "#2e9ab8",
-                                            "size": 3,
-                                            "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                                            "labelApiUrl": "placeholder"
-                                        },],
-                                        "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                                        "labelApiUrl": "placeholder"
-                                    },],
-                                    "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                                    "labelApiUrl": "placeholder"
-                                },
-                            ],
-                            // 'x': 3,
-                            // 'y': 1,
-                            "type": "diamond",
-                            "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
-                            "labelApiUrl": "placeholder"
-                        },
+                    //                 "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //                 "labelApiUrl": "placeholder"
+                    //             },
+                    //             {
+                    //                 "id": "us-census",
+                    //                 "label": "US Census Department",
+                    //                 "party": 3,
+                    //                 // "color": "#2e9ab8",
+                    //                 "size": 3,
+                    //                 "possibleChildren": [{
+                    //                     "id": "us-commerce",
+                    //                     "label": "US Department of Commerce",
+                    //                     "party": 3,
+                    //                     // "color": "#2e9ab8",
+                    //                     "size": 3,
+                    //                     "possibleChildren": [{
+                    //                         "id": "finest",
+                    //                         "label": "State & Local Finances",
+                    //                         "party": 3,
+                    //                         // "color": "#2e9ab8",
+                    //                         "size": 3,
+                    //                         "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //                         "labelApiUrl": "placeholder"
+                    //                     },],
+                    //                     "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //                     "labelApiUrl": "placeholder"
+                    //                 },],
+                    //                 "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //                 "labelApiUrl": "placeholder"
+                    //             },
+                    //         ],
+                    //         // 'x': 3,
+                    //         // 'y': 1,
+                    //         "type": "diamond",
+                    //         "dashboardComponents": dashboardComponents.slice(getRandomInt(8), 9),
+                    //         "labelApiUrl": "placeholder"
+                    //     },
 
 
-                    ],
+                    // ],
                     // 'x': 0,
                     // 'y': 0,
                     // This is an array

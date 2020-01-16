@@ -142,7 +142,7 @@ class SigmaComponent extends React.Component {
                             edgeColor: "target",
                             // It might be nice to be able to control the visibility of EdgeLabels using some sort of redux setting, but you can't update these settings in real time because sigma.refresh() breaks the component lifecycle
                             drawEdgeLabels: true,
-                            edgeLabelThreshold: 5,
+                            edgeLabelThreshold: 20,
                             defaultEdgeLabelColor: "#d8d8d8",
 
                             minNodeSize: 5,
@@ -160,7 +160,7 @@ class SigmaComponent extends React.Component {
                             defaultLabelSize: 15,
                             defaultEdgeType: "dashed",
                             // What size (from zoom level 1) of the edge will the label be dispalyed. 28 necessitates a slight zoom in to view.
-                            labelThreshold: 28,
+                            labelThreshold: 5,
                             font: "arial",
                         }}
                         style={{
