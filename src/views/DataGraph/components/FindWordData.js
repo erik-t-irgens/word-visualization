@@ -1,6 +1,6 @@
 import React from 'react';
-import { Segment, Icon, Button, Form, Transition, Radio } from 'semantic-ui-react';
-
+import { Segment, Icon, Button, Form, Transition, Radio, Grid } from 'semantic-ui-react';
+import { Slider } from "react-semantic-ui-range";
 import { addNode, removeNode } from "../../../actions/index";
 import { connect } from "react-redux";
 
@@ -14,7 +14,16 @@ class FindWordData extends React.Component {
             data: [],
             searchQuery: '',
             formVisible: false,
+            sliderValue: 5,
             maxResult: 5,
+            settings: {
+                start: 20,
+                min: 1,
+                max: 100,
+                step: 1,
+
+            },
+
         }
     }
 
@@ -293,13 +302,13 @@ class FindWordData extends React.Component {
         fetch(`https://api.datamuse.com/words?rel_syn=` + term)
             .then(res => res.json())
             .then(result =>
-                this.setState({ synonyms: result.slice(0, this.state.maxResult) })
+                this.setState({ synonyms: result.slice(0, this.state.sliderValue) })
             )
 
         fetch(`https://api.datamuse.com/words?rel_ant=` + term)
             .then(res => res.json())
             .then(result =>
-                this.setState({ antonyms: result.slice(0, this.state.maxResult) })
+                this.setState({ antonyms: result.slice(0, this.state.sliderValue) })
 
 
             )
@@ -307,14 +316,14 @@ class FindWordData extends React.Component {
         fetch(`https://api.datamuse.com/words?rel_trg=` + term)
             .then(res => res.json())
             .then(result =>
-                this.setState({ associated: result.slice(0, this.state.maxResult) })
+                this.setState({ associated: result.slice(0, this.state.sliderValue) })
 
 
             )
         fetch(`https://api.datamuse.com/words?rel_rhy=` + term)
             .then(res => res.json())
             .then(result =>
-                this.setState({ rhymes: result.slice(0, this.state.maxResult) })
+                this.setState({ rhymes: result.slice(0, this.state.sliderValue) })
 
             )
         this.setState({ done: true })
@@ -333,145 +342,96 @@ class FindWordData extends React.Component {
 
     render() {
 
-        const { formVisible, done, rhymes, associated, antonyms, synonyms } = this.state;
+        const { formVisible, done, rhymes, associated, antonyms, synonyms, settings, sliderValue } = this.state;
         return (
 
-            <div
-                style={{
-                    position: 'absolute',
-                    left: "80px",
-                    top: '100px',
-                    opacity: 1,
-                    textAlign: 'center'
-                }}
-            >
-                <Button
-                    color="black"
-                    inverted
-                    size='mini'
-                    animated='vertical'
-                    circular
-                    style={{
-                        position: 'absolute',
-                        left: '0',
-                        top: '0',
-                        opacity: 1,
-                        textAlign: 'center'
-                    }}
-                    onClick={this.handleShowOptionsForm}>
-                    <Button.Content hidden>Search</Button.Content>
-                    <Button.Content visible>
-                        <Icon name='search' />
-                    </Button.Content>
-                </Button>
-                <Transition visible={formVisible} animation="fade right" duration="300">
-                    <Segment inverted style={{
-                        position: 'absolute',
-                        left: '0',
-                        top: '30px',
-                        textAlign: 'center',
-                        maxHeight: '70vh',
-                        width: '250px',
-                        overflow: 'auto'
-                    }}>
-                        <Form style={{ textAlign: 'center' }} >
-                            <h2>Search for Trends!</h2>
-                            <h3 style={{ left: '50%', translate: "transform (-50%, -50%)" }}>Search Term</h3>
 
-                            <Form.Group widths="equal">
-                                <label style={{ color: 'white' }}>Data Source</label>
-                                <Form.Input
-                                    fluid
-                                    name="queryString"
-                                    value={this.state.queryString}
-                                    onChange={this.handleChange}
-                                    placeholder='Search Term...'
-                                />
+            <div style={{
+                position: 'absolute',
+                // left: "80px",
+                // top: '100px',
+                opacity: .8,
+                textAlign: 'center',
+                left: '10%',
+                translate: "transform (-50%, -50%)",
+                textAlign: 'center',
+                // maxHeight: '500px',
+                width: '80vw',
+                // overflow: 'auto'
+            }}>
+                <Segment inverted >
 
-                            </Form.Group>
-                            <Segment inverted>
 
-                                <h4>Result Amount Total</h4>
-                                <label style={{ color: 'white' }}>5</label>
-                                <Form.Field>
 
-                                    <Radio
-                                        toggle
-                                        name='maxResult'
-                                        value={5}
-                                        checked={this.state.maxResult === 5}
-                                        onChange={this.handleChange}
-                                    />
-                                </Form.Field>
-                                <label style={{ color: 'white' }}>10</label>
-                                <Form.Field>
-                                    <Radio
-                                        toggle
-                                        name='maxResult'
-                                        value={10}
-                                        checked={this.state.maxResult === 10}
-                                        onChange={this.handleChange}
-                                    />
-                                </Form.Field>
-
-                                <label style={{ color: 'white' }}>20</label>
-                                <Form.Field>
-                                    <Radio
-                                        toggle
-
-                                        name='maxResult'
-                                        value={20}
-                                        checked={this.state.maxResult === 20}
-                                        onChange={this.handleChange}
-                                    />
-                                </Form.Field>
-
-                                <label style={{ color: 'white' }}>50</label>
-                                <Form.Field>
-                                    <Radio
-                                        toggle
-
-                                        name='maxResult'
-                                        value={50}
-                                        checked={this.state.maxResult === 50}
-                                        onChange={this.handleChange}
-                                    />
-                                </Form.Field>
+                    <Form style={{ textAlign: 'center' }} >
+                        <Grid columns={2} >
+                            <Grid.Row>
 
 
 
 
-                            </Segment>
-                            <Button onClick={this.handleSubmit} positive content='Search' />
-                        </Form>
-                        {done ?
-                            <Segment>
-                                <h5>Add Nodes</h5>
-                                {synonyms && synonyms.length > 0 ?
+                                <Grid.Column width={8} style={{ width: "40%" }}>
+                                    <h3 style={{ left: '50%', translate: "transform (-50%, -50%)" }}>Search Term</h3>
+                                    <Form.Group widths="equal" >
 
-                                    <div>
-                                        <p>Synonyms: {synonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddSynonymsNodes} name="plus"></Icon> </p>
-                                    </div> : <></>}
-                                {antonyms && antonyms.length > 0 ?
-                                    <div>
+                                        <Form.Input
+                                            fluid
+                                            name="queryString"
+                                            value={this.state.queryString}
+                                            onChange={this.handleChange}
+                                            placeholder='Search Term...'
+                                        />
+                                    </Form.Group>
+                                </Grid.Column>
 
-                                        <p>Antonyms: {antonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAntonymsNodes} name="plus"></Icon></p>
-                                    </div> : <></>}
-                                {associated && associated.length > 0 ?
-                                    <div>
 
-                                        <p>Associated: {associated.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAssociatedNodes} name="plus"></Icon></p>
-                                    </div> : <></>}
-                                {rhymes && rhymes.length > 0 ?
-                                    <div>
 
-                                        <p>Rhymes: {rhymes.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddRhymesNodes} name="plus"></Icon></p>
-                                    </div> : <></>}
-                            </Segment>
-                            : <></>}
-                    </Segment>
-                </Transition>
+                                <Grid.Column width={8} style={{ width: "40%" }}>
+                                    <h3 style={{ left: '50%', translate: "transform (-50%, -50%)" }}>Result Limit</h3>
+
+                                    <h3 style={{ color: "white" }}>{sliderValue}</h3>
+                                    <Slider discrete color="red" settings={settings} name="sliderValue" value={sliderValue} onChange={this.handleChange} />
+
+                                </Grid.Column>
+
+
+                            </Grid.Row>
+                        </Grid>
+                    </Form>
+
+                    {done ?
+                        <Segment style={{ width: "50px" }}>
+                            <h5>Add Nodes</h5>
+                            {synonyms && synonyms.length > 0 ?
+
+                                <div>
+                                    <p>Synonyms: {synonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddSynonymsNodes} name="plus"></Icon> </p>
+                                </div> : <></>}
+                            {antonyms && antonyms.length > 0 ?
+                                <div>
+
+                                    <p>Antonyms: {antonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAntonymsNodes} name="plus"></Icon></p>
+                                </div> : <></>}
+                            {associated && associated.length > 0 ?
+                                <div>
+
+                                    <p>Associated: {associated.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAssociatedNodes} name="plus"></Icon></p>
+                                </div> : <></>}
+                            {rhymes && rhymes.length > 0 ?
+                                <div>
+
+                                    <p>Rhymes: {rhymes.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddRhymesNodes} name="plus"></Icon></p>
+                                </div> : <></>}
+                        </Segment>
+                        : <></>}
+
+
+                </Segment >
+
+
+                <Button onClick={this.handleSubmit} positive content='Search' style={{ position: "absolute", left: "px", top: '130px', translate: "transform (-50%, -50%)", }} />
             </div>
+
         )
     }
 }

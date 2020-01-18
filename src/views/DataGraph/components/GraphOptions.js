@@ -125,8 +125,8 @@ class GraphOptions extends React.Component {
             <div
                 style={{
                     position: 'absolute',
-                    left: "20px",
-                    top: '100px',
+                    left: "70px",
+                    top: '90px',
                     opacity: 1,
                     textAlign: 'center'
                 }}
