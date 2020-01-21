@@ -28,7 +28,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
 
-            <Header />
+            {/* <Header /> */}
 
             <Container fluid style={{ padding: '0 1em' }}>
               <Switch>

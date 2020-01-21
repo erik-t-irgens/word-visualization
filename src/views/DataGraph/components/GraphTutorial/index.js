@@ -63,8 +63,8 @@ class GraphTurorial extends React.Component {
             <div
                 style={{
                     position: 'absolute',
-                    right: "70px",
-                    top: '90px',
+                    right: "5%",
+                    top: '130px',
                     opacity: 1,
                     textAlign: 'center'
                 }}

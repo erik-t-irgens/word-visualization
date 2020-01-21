@@ -21,11 +21,15 @@ class FindWordData extends React.Component {
                 min: 1,
                 max: 100,
                 step: 1,
-
+                onChange: value => {
+                    this.setState({ sliderValue: value })
+                },
             },
 
         }
     }
+
+
 
     // Called by above, uses Redux to change current filter
     handleChangeFilter = (filter) => {
@@ -66,7 +70,7 @@ class FindWordData extends React.Component {
 
     // Used when clearing filters
     handleAbstractChangeFilter = (value) => {
-        this.setState({ value: 0, currentParty: "No Filter" })
+        this.setState({ filterValue: 0, currentParty: "No Filter" })
         this.handleChangeFilter(value)
     }
 
@@ -95,8 +99,8 @@ class FindWordData extends React.Component {
                 })
         }
 
-        if (this.state.value > 0) {
-            this.handleChangeFilter(this.state.value)
+        if (this.state.filterValue > 0) {
+            this.handleChangeFilter(this.state.filterValue)
         } else {
             this.handleAbstractChangeFilter(0)
         }
@@ -156,7 +160,7 @@ class FindWordData extends React.Component {
                         id: word.word,
                         label: word.word,
                         type: 'circle',
-                        size: word.score / 1000,
+                        size: word.score / 1000 < 10 ? word.score / 1000 : 9,
                         color: "#66ffcc",
                         x: 0,
                         y: 0,
@@ -206,7 +210,7 @@ class FindWordData extends React.Component {
                         id: word.word,
                         label: word.word,
                         type: 'circle',
-                        size: word.score / 1000,
+                        size: word.score / 1000 < 10 ? word.score / 1000 : 9,
                         color: "#ffcc66",
                         x: 0,
                         y: 0,
@@ -255,7 +259,7 @@ class FindWordData extends React.Component {
                         id: word.word,
                         label: word.word,
                         type: 'circle',
-                        size: word.score / 1000,
+                        size: word.score / 1000 < 10 ? word.score / 1000 : 9,
                         color: "#ff6666",
                         x: 0,
                         y: 0,
@@ -305,7 +309,7 @@ class FindWordData extends React.Component {
                         id: word.word,
                         label: word.word,
                         type: 'circle',
-                        size: word.score / 1000,
+                        size: word.score / 1000 < 10 ? word.score / 1000 : 9,
                         color: "#6699ff",
                         x: 0,
                         y: 0,
@@ -398,6 +402,12 @@ class FindWordData extends React.Component {
     handleSubmit = () => {
         this.handleQueryWord(this.state.queryString)
 
+        if (!this.state.editMode) {
+            this.setState({ editMode: true })
+            this.props.handleEditMode()
+        }
+
+
     }
 
 
@@ -406,32 +416,20 @@ class FindWordData extends React.Component {
         const { editMode, done, rhymes, associated, antonyms, synonyms, settings, sliderValue } = this.state;
         return (
 
-
             <div style={{
-                position: 'absolute',
-                // left: "80px",
-                // top: '100px',
+
                 opacity: .8,
                 textAlign: 'center',
-                left: '10%',
-                translate: "transform (-50%, -50%)",
-                textAlign: 'center',
-                // maxHeight: '500px',
+                margin: '0 auto',
+                marginTop: '10px',
                 width: '80vw',
-                // overflow: 'auto'
+
             }}>
                 <Segment inverted >
-
-
-
                     <Form style={{ textAlign: 'center' }} >
-                        <Grid columns={2} >
+                        <Grid columns="equal" divided inverted>
                             <Grid.Row>
-
-
-
-
-                                <Grid.Column width={8} style={{ width: "40%" }}>
+                                <Grid.Column >
                                     <h3 style={{ left: '50%', translate: "transform (-50%, -50%)" }}>Search Term</h3>
                                     <Form.Group widths="equal" >
 
@@ -443,84 +441,89 @@ class FindWordData extends React.Component {
                                             placeholder='Search Term...'
                                         />
                                     </Form.Group>
+                                    <Button onClick={this.handleSubmit} positive content='Search' />
                                 </Grid.Column>
 
-
-
-                                <Grid.Column width={8} style={{ width: "40%" }}>
+                                <Grid.Column >
                                     <h3 style={{ left: '50%', translate: "transform (-50%, -50%)" }}>Result Limit</h3>
-
-                                    <h3 style={{ color: "white" }}>{sliderValue}</h3>
                                     <Slider discrete color="red" settings={settings} name="sliderValue" value={sliderValue} onChange={this.handleChange} />
-
+                                    <h3 style={{ color: "white" }}>{sliderValue}</h3>
                                 </Grid.Column>
 
+                                <Grid.Column >
+                                    <h3 style={{ left: '50%', translate: "transform (-50%, -50%)" }}>Layout</h3>
+                                    {!editMode ? <Form.Field>Current Layout: <b>Gravitational Graph</b></Form.Field>
+                                        : <Form.Field>Current Layout: <b>Tree Graph</b></Form.Field>}
+                                    <Grid columns="equal" divided inverted>
+                                        <Grid.Row >
+
+
+                                            <Grid.Column>
+
+                                                <Form.Field>
+                                                    <label style={{ color: 'white' }}>Switch Layout</label>
+                                                    <Icon name="fork"></Icon>
+                                                    <Radio
+                                                        slider
+                                                        name='editModeToggle'
+                                                        checked={this.state.editMode}
+                                                        onChange={this.handleEditMode}
+                                                    />
+                                                    <Icon name="tree"></Icon>
+                                                </Form.Field>
+                                            </Grid.Column>
+
+                                            <Grid.Column>
+                                                <Button.Group style={{ marginTop: '20px' }}>
+                                                    <Button inverted icon='arrow down'
+                                                        onClick={() => this.handleChangeLayoutDirection('TB')} disabled={!editMode} />
+                                                    <Button inverted icon='arrow up'
+                                                        onClick={() => this.handleChangeLayoutDirection('BT')} disabled={!editMode} />
+                                                    <Button inverted icon='arrow right'
+                                                        onClick={() => this.handleChangeLayoutDirection('LR')} disabled={!editMode} />
+                                                    <Button inverted icon='arrow left'
+                                                        onClick={() => this.handleChangeLayoutDirection('RL')} disabled={!editMode} />
+                                                </Button.Group>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    </Grid>
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+                    </Form>
+                </Segment >
+
+                {done ?
+                    <Segment inverted style={{ margin: "0 auto" }}>
+                        <h5>Add Nodes</h5>
+                        <Grid columns="equal" divided inverted>
+                            <Grid.Row >
+                                {synonyms && synonyms.length > 0 ?
+
+                                    <Grid.Column>
+                                        <p>Synonyms: {synonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddSynonymsNodes} name="plus"></Icon> </p>
+                                    </Grid.Column> : <></>}
+                                {antonyms && antonyms.length > 0 ?
+                                    <Grid.Column>
+
+                                        <p>Antonyms: {antonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAntonymsNodes} name="plus"></Icon></p>
+                                    </Grid.Column> : <></>}
+                                {associated && associated.length > 0 ?
+                                    <Grid.Column>
+
+                                        <p>Associated: {associated.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAssociatedNodes} name="plus"></Icon></p>
+                                    </Grid.Column> : <></>}
+
+                                {rhymes && rhymes.length > 0 ?
+                                    <Grid.Column>
+
+                                        <p>Rhymes: {rhymes.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddRhymesNodes} name="plus"></Icon></p>
+                                    </Grid.Column> : <></>}
 
                             </Grid.Row>
                         </Grid>
-
-                        <Form.Field>
-                            <label style={{ color: 'white' }}>Toggle Edit Mode</label>
-                            <Radio
-                                toggle
-                                name='editModeToggle'
-                                checked={this.state.editMode}
-                                onChange={this.handleEditMode}
-                            />
-                        </Form.Field>
-                        {editMode ?
-                            <>
-
-                                <h3>Layout</h3>
-                                <Form.Field>Current Layout: <b>{this.state.currentDirection}</b></Form.Field>
-                                <Button.Group style={{ marginTop: '20px' }}>
-                                    <Button inverted icon='arrow down'
-                                        onClick={() => this.handleChangeLayoutDirection('TB')} />
-                                    <Button inverted icon='arrow up'
-                                        onClick={() => this.handleChangeLayoutDirection('BT')} />
-                                    <Button inverted icon='arrow right'
-                                        onClick={() => this.handleChangeLayoutDirection('LR')} />
-                                    <Button inverted icon='arrow left'
-                                        onClick={() => this.handleChangeLayoutDirection('RL')} />
-                                </Button.Group></> : null}
-                    </Form>
-
-
-
-
-                </Segment >
-
-
-                <Button onClick={this.handleSubmit} positive content='Search' style={{ position: "absolute", top: '140px', translate: "transform (-50%, -50%)", }} />
-                {done ?
-                    <Segment inverted style={{ position: "absolute", top: '140px', translate: "transform (-50%, -50%)", width: "50vw" }}>
-                        <h5>Add Nodes</h5>
-                        {synonyms && synonyms.length > 0 ?
-
-                            <div>
-                                <p>Synonyms: {synonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddSynonymsNodes} name="plus"></Icon> </p>
-                            </div> : <></>}
-                        {antonyms && antonyms.length > 0 ?
-                            <div>
-
-                                <p>Antonyms: {antonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAntonymsNodes} name="plus"></Icon></p>
-                            </div> : <></>}
-                        {associated && associated.length > 0 ?
-                            <div>
-
-                                <p>Associated: {associated.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAssociatedNodes} name="plus"></Icon></p>
-                            </div> : <></>}
-                        {rhymes && rhymes.length > 0 ?
-                            <div>
-
-                                <p>Rhymes: {rhymes.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddRhymesNodes} name="plus"></Icon></p>
-                            </div> : <></>}
                     </Segment>
                     : <></>}
-
-
-
-
             </div>
 
         )
