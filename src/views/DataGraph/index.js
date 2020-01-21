@@ -213,10 +213,11 @@ class SigmaComponent extends React.Component {
 
                             />
                         }
-                        <GraphTutorial />
+
 
 
                         <FindWordData handleEditMode={this.handleEditMode} handleChangeFilter={this.handleChangeFilter}></FindWordData>
+                        <GraphTutorial />
 
                         {filter.id ?
 

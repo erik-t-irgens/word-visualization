@@ -14,7 +14,7 @@ class FindWordData extends React.Component {
             data: [],
             searchQuery: '',
             formVisible: false,
-            sliderValue: 5,
+            sliderValue: 15,
             maxResult: 5,
             settings: {
                 start: 20,
@@ -364,13 +364,13 @@ class FindWordData extends React.Component {
 
 
 
-        fetch(`https://api.datamuse.com/words?rel_syn=` + term)
+        fetch(`https://api.datamuse.com/words?rel_syn=` + term + "&md=dpsrf")
             .then(res => res.json())
             .then(result =>
                 this.setState({ synonyms: result.slice(0, this.state.sliderValue) })
             )
 
-        fetch(`https://api.datamuse.com/words?rel_ant=` + term)
+        fetch(`https://api.datamuse.com/words?rel_ant=` + term + "&md=dpsrf")
             .then(res => res.json())
             .then(result =>
                 this.setState({ antonyms: result.slice(0, this.state.sliderValue) })
@@ -378,14 +378,14 @@ class FindWordData extends React.Component {
 
             )
 
-        fetch(`https://api.datamuse.com/words?rel_trg=` + term)
+        fetch(`https://api.datamuse.com/words?rel_trg=` + term + "&md=dpsrf")
             .then(res => res.json())
             .then(result =>
                 this.setState({ associated: result.slice(0, this.state.sliderValue) })
 
 
             )
-        fetch(`https://api.datamuse.com/words?rel_rhy=` + term)
+        fetch(`https://api.datamuse.com/words?rel_rhy=` + term + "&md=dpsrf")
             .then(res => res.json())
             .then(result =>
                 this.setState({ rhymes: result.slice(0, this.state.sliderValue) })
@@ -446,8 +446,17 @@ class FindWordData extends React.Component {
 
                                 <Grid.Column >
                                     <h3 style={{ left: '50%', translate: "transform (-50%, -50%)" }}>Result Limit</h3>
-                                    <Slider discrete color="red" settings={settings} name="sliderValue" value={sliderValue} onChange={this.handleChange} />
+                                    <Slider discrete color="green" settings={settings} name="sliderValue" value={sliderValue} onChange={this.handleChange} />
                                     <h3 style={{ color: "white" }}>{sliderValue}</h3>
+                                    <p>Readbility:
+                                        {sliderValue < 30 ?
+                                            <p style={{ color: 'green' }}> <b>Good</b></p>
+                                            :
+                                            sliderValue < 50 ?
+                                                <p style={{ color: 'yellow' }}> <b>Fair</b></p>
+                                                :
+                                                <p style={{ color: 'orange' }}> <b>Difficult</b></p>}
+                                    </p>
                                 </Grid.Column>
 
                                 <Grid.Column >

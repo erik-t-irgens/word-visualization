@@ -62,9 +62,9 @@ class GraphTurorial extends React.Component {
 
             <div
                 style={{
-                    position: 'absolute',
-                    right: "5%",
-                    top: '130px',
+                    // position: 'absolute',
+                    // right: "5%",
+                    // top: '130px',
                     opacity: 1,
                     textAlign: 'center'
                 }}
@@ -76,10 +76,9 @@ class GraphTurorial extends React.Component {
                     animated='vertical'
                     circular
                     style={{
-                        position: 'absolute',
-                        right: '0',
-                        top: '0',
-                        opacity: 1,
+                        marginTop: "10px",
+                        marginRight: '13vw',
+                        marginLeft: '87vw',
                         textAlign: 'center'
                     }}
                     onClick={this.handleShowTutorial}>
@@ -93,11 +92,12 @@ class GraphTurorial extends React.Component {
                 <Transition visible={tutorialVisible} animation="fade left" duration="300">
                     <Segment style={{
                         position: 'absolute',
-                        right: '0',
-                        top: '30px',
+                        right: '10vw',
+                        top: '230px',
                         textAlign: 'center',
                         maxHeight: '70vh',
-                        overflow: 'auto'
+                        overflow: 'auto',
+                        opacity: .9
                     }} inverted>
 
                         <TutorialSlide
@@ -109,7 +109,7 @@ class GraphTurorial extends React.Component {
 
                         <Divider></Divider>
                         <GalleryButtons
-                            maxPage={5}
+                            maxPage={4}
                             currentPage={currentSlide}
                             functionality={this.handleChangeCurrentSlide}></GalleryButtons>
                     </Segment>
