@@ -469,7 +469,7 @@ class FindWordData extends React.Component {
 
                                                 <Form.Field>
                                                     <label style={{ color: 'white' }}>Switch Layout</label>
-                                                    <Icon size="big" inverted disabled={editMode} name="fork"></Icon>
+                                                    <Icon size="big" inverted disabled={editMode} name="snowflake outline"></Icon>
                                                     <Radio
                                                         slider
                                                         name='editModeToggle'
