@@ -66,7 +66,10 @@ class GraphTurorial extends React.Component {
                     // right: "5%",
                     // top: '130px',
                     opacity: 1,
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    marginTop: "10px",
+                    marginRight: '13vw',
+                    marginLeft: '87vw',
                 }}
             >
                 <Button
@@ -76,9 +79,7 @@ class GraphTurorial extends React.Component {
                     animated='vertical'
                     circular
                     style={{
-                        marginTop: "10px",
-                        marginRight: '13vw',
-                        marginLeft: '87vw',
+
                         textAlign: 'center'
                     }}
                     onClick={this.handleShowTutorial}>
@@ -91,9 +92,9 @@ class GraphTurorial extends React.Component {
                 </Button>
                 <Transition visible={tutorialVisible} animation="fade left" duration="300">
                     <Segment style={{
-                        position: 'absolute',
+                        position: 'fixed',
                         right: '10vw',
-                        top: '230px',
+                        top: '320px',
                         textAlign: 'center',
                         maxHeight: '70vh',
                         overflow: 'auto',

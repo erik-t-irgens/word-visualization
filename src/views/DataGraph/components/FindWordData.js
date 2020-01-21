@@ -465,20 +465,18 @@ class FindWordData extends React.Component {
                                         : <Form.Field>Current Layout: <b>Tree Graph</b></Form.Field>}
                                     <Grid columns="equal" divided inverted>
                                         <Grid.Row >
-
-
                                             <Grid.Column>
 
                                                 <Form.Field>
                                                     <label style={{ color: 'white' }}>Switch Layout</label>
-                                                    <Icon name="fork"></Icon>
+                                                    <Icon size="big" inverted disabled={editMode} name="fork"></Icon>
                                                     <Radio
                                                         slider
                                                         name='editModeToggle'
                                                         checked={this.state.editMode}
                                                         onChange={this.handleEditMode}
                                                     />
-                                                    <Icon name="tree"></Icon>
+                                                    <Icon size="big" inverted disabled={!editMode} name="tree"></Icon>
                                                 </Form.Field>
                                             </Grid.Column>
 
@@ -514,9 +512,9 @@ class FindWordData extends React.Component {
                                     </Grid.Column> : <></>}
                                 {antonyms && antonyms.length > 0 ?
                                     <Grid.Column>
-
                                         <p>Antonyms: {antonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAntonymsNodes} name="plus"></Icon></p>
                                     </Grid.Column> : <></>}
+
                                 {associated && associated.length > 0 ?
                                     <Grid.Column>
 
