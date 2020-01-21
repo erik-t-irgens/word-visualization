@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Icon, Button, Form, Transition, Radio, Grid } from 'semantic-ui-react';
 import { Slider } from "react-semantic-ui-range";
-import { addNode, removeNode } from "../../../actions/index";
+import { addNode, removeNode, addGraphFilter, clearGraphFilter, changeLayoutDirection, toggleLabelVisibility } from "../../../actions/index";
 import { connect } from "react-redux";
 
 
@@ -27,28 +27,89 @@ class FindWordData extends React.Component {
         }
     }
 
-    // // This function also deletes child nodes and edges (tree shake orphans).
-    // handleDeleteNode = (incomingNode) => {
-    //     const edgesToRemove = this.props.dashboardGraph.graphToDisplay.edges.filter(edge => edge.source === incomingNode.id)
-    //     let nodesToRemove = []
-    //     edgesToRemove.forEach(edge => nodesToRemove = [...nodesToRemove, ...this.props.dashboardGraph.graphToDisplay.nodes.filter(node => node.id === edge.target)])
-    //     this.props.removeNode(incomingNode)
-    //     if (nodesToRemove.length > 0) {
-    //         nodesToRemove.forEach(node => this.handleDeleteNode(node))
-    //     }
-    //     this.props.closeModal()
-    // }
+    // Called by above, uses Redux to change current filter
+    handleChangeFilter = (filter) => {
+        switch (filter) {
+            case 1:
+                this.props.addGraphFilter({
+                    filter: {
+                        party: 1,
+                        id: 'firstparty'
+                    }
+                })
+                break;
+            case 2:
+                this.props.addGraphFilter({
+                    filter: {
+                        party: 2,
+                        id: 'secondparty'
+                    }
+                })
+                break;
+            case 3:
+                this.props.addGraphFilter({
+                    filter: {
+                        party: 3,
+                        id: 'thirdparty'
+                    }
+                })
+                break;
+            default:
+                this.props.clearGraphFilter({
+                    filter: {
+                        party: null,
+                        id: null
+                    }
+                })
+        }
+    }
 
-    // componentDidMount = () => {
+    // Used when clearing filters
+    handleAbstractChangeFilter = (value) => {
+        this.setState({ value: 0, currentParty: "No Filter" })
+        this.handleChangeFilter(value)
+    }
 
-    //     this.setState(
-    //         {
-    //             visible: this.props.visible,
-    //             data: this.props.data,
-    //             editMode: this.props.editMode
-    //         }
-    //     )
-    // }
+    handleChangeLayoutDirection = (direction) => {
+        // From index, sets index's state of direction to be what Dagre wants for layout
+        this.props.changeLayoutDirection(direction)
+        switch (direction) {
+            case 'TB':
+                this.setState({
+                    currentDirection: 'Top to Bottom'
+                })
+                break;
+            case 'BT':
+                this.setState({
+                    currentDirection: 'Bottom to Top'
+                })
+                break;
+            case 'LR':
+                this.setState({
+                    currentDirection: 'Left to Right'
+                })
+                break;
+            default:
+                this.setState({
+                    currentDirection: 'Right to Left'
+                })
+        }
+
+        if (this.state.value > 0) {
+            this.handleChangeFilter(this.state.value)
+        } else {
+            this.handleAbstractChangeFilter(0)
+        }
+
+    }
+
+
+    // Enables edit mode here and in index.
+    handleEditMode = () => {
+        this.props.handleEditMode()
+        this.setState((prevState) => ({ editMode: !prevState.editMode }))
+    }
+
     delay = (duration) => new Promise(resolve => setTimeout(resolve, duration));
 
     handleShowOptionsForm = () => {
@@ -342,7 +403,7 @@ class FindWordData extends React.Component {
 
     render() {
 
-        const { formVisible, done, rhymes, associated, antonyms, synonyms, settings, sliderValue } = this.state;
+        const { editMode, done, rhymes, associated, antonyms, synonyms, settings, sliderValue } = this.state;
         return (
 
 
@@ -397,39 +458,69 @@ class FindWordData extends React.Component {
 
                             </Grid.Row>
                         </Grid>
+
+                        <Form.Field>
+                            <label style={{ color: 'white' }}>Toggle Edit Mode</label>
+                            <Radio
+                                toggle
+                                name='editModeToggle'
+                                checked={this.state.editMode}
+                                onChange={this.handleEditMode}
+                            />
+                        </Form.Field>
+                        {editMode ?
+                            <>
+
+                                <h3>Layout</h3>
+                                <Form.Field>Current Layout: <b>{this.state.currentDirection}</b></Form.Field>
+                                <Button.Group style={{ marginTop: '20px' }}>
+                                    <Button inverted icon='arrow down'
+                                        onClick={() => this.handleChangeLayoutDirection('TB')} />
+                                    <Button inverted icon='arrow up'
+                                        onClick={() => this.handleChangeLayoutDirection('BT')} />
+                                    <Button inverted icon='arrow right'
+                                        onClick={() => this.handleChangeLayoutDirection('LR')} />
+                                    <Button inverted icon='arrow left'
+                                        onClick={() => this.handleChangeLayoutDirection('RL')} />
+                                </Button.Group></> : null}
                     </Form>
 
-                    {done ?
-                        <Segment style={{ width: "50px" }}>
-                            <h5>Add Nodes</h5>
-                            {synonyms && synonyms.length > 0 ?
 
-                                <div>
-                                    <p>Synonyms: {synonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddSynonymsNodes} name="plus"></Icon> </p>
-                                </div> : <></>}
-                            {antonyms && antonyms.length > 0 ?
-                                <div>
-
-                                    <p>Antonyms: {antonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAntonymsNodes} name="plus"></Icon></p>
-                                </div> : <></>}
-                            {associated && associated.length > 0 ?
-                                <div>
-
-                                    <p>Associated: {associated.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAssociatedNodes} name="plus"></Icon></p>
-                                </div> : <></>}
-                            {rhymes && rhymes.length > 0 ?
-                                <div>
-
-                                    <p>Rhymes: {rhymes.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddRhymesNodes} name="plus"></Icon></p>
-                                </div> : <></>}
-                        </Segment>
-                        : <></>}
 
 
                 </Segment >
 
 
-                <Button onClick={this.handleSubmit} positive content='Search' style={{ position: "absolute", left: "px", top: '130px', translate: "transform (-50%, -50%)", }} />
+                <Button onClick={this.handleSubmit} positive content='Search' style={{ position: "absolute", top: '140px', translate: "transform (-50%, -50%)", }} />
+                {done ?
+                    <Segment inverted style={{ position: "absolute", top: '140px', translate: "transform (-50%, -50%)", width: "50vw" }}>
+                        <h5>Add Nodes</h5>
+                        {synonyms && synonyms.length > 0 ?
+
+                            <div>
+                                <p>Synonyms: {synonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddSynonymsNodes} name="plus"></Icon> </p>
+                            </div> : <></>}
+                        {antonyms && antonyms.length > 0 ?
+                            <div>
+
+                                <p>Antonyms: {antonyms.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAntonymsNodes} name="plus"></Icon></p>
+                            </div> : <></>}
+                        {associated && associated.length > 0 ?
+                            <div>
+
+                                <p>Associated: {associated.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddAssociatedNodes} name="plus"></Icon></p>
+                            </div> : <></>}
+                        {rhymes && rhymes.length > 0 ?
+                            <div>
+
+                                <p>Rhymes: {rhymes.length} <Icon style={{ cursor: 'pointer', color: 'green' }} onClick={this.handleAddRhymesNodes} name="plus"></Icon></p>
+                            </div> : <></>}
+                    </Segment>
+                    : <></>}
+
+
+
+
             </div>
 
         )
@@ -441,7 +532,7 @@ function mapStateToProps({ dashboardGraph }) {
 }
 
 const mapDispatchToProps = {
-    addNode, removeNode
+    addNode, removeNode, addGraphFilter, clearGraphFilter, changeLayoutDirection, toggleLabelVisibility
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FindWordData);
