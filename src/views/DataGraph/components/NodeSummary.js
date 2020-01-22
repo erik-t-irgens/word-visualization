@@ -38,7 +38,9 @@ class NodeSummary extends React.Component {
                 data: this.props.data,
                 editMode: this.props.editMode
             }
+
         )
+        console.log("HEY YOU OVER HERE", this.props.data)
     }
 
     render() {

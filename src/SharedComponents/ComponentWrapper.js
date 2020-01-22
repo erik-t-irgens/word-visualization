@@ -34,19 +34,12 @@ class ComponentWrapper extends React.Component {
             case 'bar': {
                 return 'chart bar';
             }
-            case 'gauge': {
-                return 'chart pie';
-            }
-            case 'stat-group': {
-                return 'numbered list';
-            }
+
             case 'single-stat': {
                 return 'info';
             }
-            case 'news-feed': {
-                return 'newspaper outline';
-            }
-            case 'grid-list': {
+
+            case 'list': {
                 return 'numbered list'
             }
             default: {

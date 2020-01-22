@@ -27,10 +27,10 @@ class Chart extends React.Component {
         this.state = {
             isLoading: true,
             crosshairValues: [],
-            yAxis: false,
-            xAxis: false,
-            VGridLine: false,
-            HGridLine: false,
+            yAxis: true,
+            xAxis: true,
+            VGridLine: true,
+            HGridLine: true,
             size: 'scale(1.2)  translate(0px, 20px)',
             visibleSummary: true,
             opacity: .5,
@@ -39,16 +39,13 @@ class Chart extends React.Component {
         }
     }
 
-    componentDidMount = async () => {
+    componentDidMount = () => {
         // Calls the data from provided apiUrl
-
-        this.setState({ data: [{ x: 0, y: 0 }], isLoading: false })
+        this.props.data ? this.setState({ data: this.props.data, isLoading: true }, () => this.setState({ isLoading: false })) :
+            this.setState({ data: [{ x: 0, y: 0 }], isLoading: false })
 
         this.setState({ isLoading: false, gradientId: this.props.type + Math.floor(Math.random() * 1000) })
     }
-
-    // This is inteded to prettify large numbers, especially file sizes numbers. It currently has some implementation, but needs a lot of iteration.
-
 
     // Shows in depth graph information
     _onMouseEnter = () => {
@@ -69,6 +66,7 @@ class Chart extends React.Component {
         if (this.state.VGridLine) {
             this.setState({ crosshairValues: [{ x: this.state.data[index].x, y: this.state.data[index].y }] })
         }
+
     }, 1);
 
 
@@ -85,22 +83,6 @@ class Chart extends React.Component {
             visibleSummary: true
         });
     };
-
-    // Parses the information called from AWS metrics.
-    handleParseJsonDataXY = (data) => {
-
-        const responseObject = data;
-        let dataArray = [];
-        if (data.statusCode === 200 && responseObject.MetricDataResults[0].Timestamps.length > 0) {
-            for (let i = 0; i < responseObject.MetricDataResults[0].Timestamps.length - 1; i++) {
-                dataArray.push({ x: responseObject.MetricDataResults[0].Timestamps[i].substring(5, 10) + ', ' + responseObject.MetricDataResults[0].Timestamps[i].substring(11, 16), y: this.handleBytesToSize(responseObject.MetricDataResults[0].Values[i]) })
-            }
-        } else {
-            dataArray.push({ x: 'No Data Available', y: "N/A" })
-        }
-
-        return dataArray;
-    }
 
 
     render() {
@@ -165,7 +147,7 @@ class Chart extends React.Component {
                                 : null
                             }
                             {xAxis ?
-                                <XAxis title="Date and Time"
+                                <XAxis title="Word"
                                     position="middle"
                                     tickLabelAngle={-30}
                                     style={{
@@ -178,7 +160,7 @@ class Chart extends React.Component {
 
                             {yAxis ?
                                 <YAxis
-                                    title="Replace this with something"
+                                    title="Word Ranking"
                                     tickLabelAngle={-30}
                                     position="middle"
                                     style={{

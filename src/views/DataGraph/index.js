@@ -65,6 +65,7 @@ class SigmaComponent extends React.Component {
             summaryVisible: true, nodeData: e.data.node,
             dashboardComponents: e.data.node.dashboardComponents
         })
+        console.log(e.data.node.dashboardComponents, "HEY LOOKY!")
     }
 
     // Close summary (gallery)
@@ -142,7 +143,7 @@ class SigmaComponent extends React.Component {
                             edgeColor: "target",
                             // It might be nice to be able to control the visibility of EdgeLabels using some sort of redux setting, but you can't update these settings in real time because sigma.refresh() breaks the component lifecycle
                             drawEdgeLabels: true,
-                            edgeLabelThreshold: 20,
+                            // edgeLabelThreshold: 20,
                             defaultEdgeLabelColor: "#d8d8d8",
 
                             minNodeSize: 5,

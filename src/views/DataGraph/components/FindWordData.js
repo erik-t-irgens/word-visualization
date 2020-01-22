@@ -139,13 +139,41 @@ class FindWordData extends React.Component {
                 color: "#66ffcc",
                 type: 'diamond',
                 x: 0,
-                y: 0
+                y: 0,
+                dashboardComponents: [{
+                    type: 'bar',
+                    name: 'Word Relevance',
+                    size: 8,
+                    data: [],
+                    color1: '#66ffcc',
+                    color2: '#18f5ab',
+                    yAxis: true,
+                    xAxis: true,
+                    VGridLine: true,
+                    HGridLine: true,
+                },
+                {
+                    type: 'single-stat',
+                    name: 'Word Count',
+                    size: 8,
+                    data: { value: 0, label: "Word(s)" },
+                    color: 'teal',
+
+                },
+                {
+                    type: 'list',
+                    name: 'Word List',
+                    size: 8,
+                    data: [],
+                    color: 'teal',
+
+                },]
             },
             edge: {
                 id: "rhymes",
                 source: 'main-node',
                 target: 'rhymes',
-                type: 'dashed',
+                type: 'parallel',
                 color: "#66ffcc",
             }
         }
@@ -153,6 +181,9 @@ class FindWordData extends React.Component {
 
         if (this.state.rhymes && this.state.rhymes.length > 0) {
             this.state.rhymes.forEach((word) => {
+                rhymes.node.dashboardComponents[0].data.push({ x: word.word, y: word.score })
+                rhymes.node.dashboardComponents[1].data.value += 1
+                rhymes.node.dashboardComponents[2].data.push({ word: word.word, score: word.score, definition: word.defs ? word.defs[0] : "No definition available" })
                 this.delay(100)
                 console.log(word)
                 this.props.addNode({
@@ -189,13 +220,43 @@ class FindWordData extends React.Component {
                 color: "#ffcc66",
                 type: 'diamond',
                 x: 0,
-                y: 0
+                y: 0,
+                dashboardComponents: [{
+                    type: 'bar',
+                    name: 'Word Relevance',
+                    size: 8,
+                    data: [],
+                    color1: '#ffcc66',
+                    color2: '#ffbe3b',
+                    yAxis: true,
+                    xAxis: true,
+                    VGridLine: true,
+                    HGridLine: true,
+                }, {
+                    type: 'single-stat',
+                    name: 'Word Count',
+                    size: 8,
+                    data: { value: 0, label: "Word(s)" },
+                    color: 'yellow',
+                    yAxis: true,
+                    xAxis: true,
+                    VGridLine: true,
+                    HGridLine: true,
+                },
+                {
+                    type: 'list',
+                    name: 'Word List',
+                    size: 8,
+                    data: [],
+                    color: 'yellow',
+
+                },]
             },
             edge: {
                 id: "associated",
                 source: 'main-node',
                 target: 'associated',
-                type: 'dashed',
+                type: 'parallel',
                 color: "#ffcc66",
             }
         }
@@ -204,6 +265,9 @@ class FindWordData extends React.Component {
 
         if (this.state.associated && this.state.associated.length > 0) {
             this.state.associated.forEach((word) => {
+                associated.node.dashboardComponents[0].data.push({ x: word.word, y: word.score })
+                associated.node.dashboardComponents[1].data.value += 1
+                associated.node.dashboardComponents[2].data.push({ word: word.word, score: word.score, definition: word.defs ? word.defs[0] : "No definition available" })
                 this.delay(100)
                 this.props.addNode({
                     node: {
@@ -222,6 +286,7 @@ class FindWordData extends React.Component {
                         source: 'associated',
                         target: word.word,
                         color: "#ffcc66",
+
                     }
                 });
             })
@@ -238,13 +303,43 @@ class FindWordData extends React.Component {
                 color: "#ff6666",
                 type: 'diamond',
                 x: 0,
-                y: 0
+                y: 0,
+                dashboardComponents: [{
+                    type: 'bar',
+                    name: 'Word Relevance',
+                    size: 8,
+                    data: [],
+                    color1: '#ff6666',
+                    color2: '#ff3636',
+                    yAxis: true,
+                    xAxis: true,
+                    VGridLine: true,
+                    HGridLine: true,
+                }, {
+                    type: 'single-stat',
+                    name: 'Word Count',
+                    size: 8,
+                    data: { value: 0, label: "Word(s)" },
+                    color: 'red',
+                    yAxis: true,
+                    xAxis: true,
+                    VGridLine: true,
+                    HGridLine: true,
+                },
+                {
+                    type: 'list',
+                    name: 'Word List',
+                    size: 8,
+                    data: [],
+                    color: 'red',
+
+                },]
             },
             edge: {
                 id: "antonyms",
                 source: 'main-node',
                 target: 'antonyms',
-                type: 'dashed',
+                type: 'parallel',
                 color: "#ff6666",
             }
         }
@@ -253,6 +348,9 @@ class FindWordData extends React.Component {
 
         if (this.state.antonyms && this.state.antonyms.length > 0) {
             this.state.antonyms.forEach((word) => {
+                antonyms.node.dashboardComponents[0].data.push({ x: word.word, y: word.score })
+                antonyms.node.dashboardComponents[1].data.value += 1
+                antonyms.node.dashboardComponents[2].data.push({ word: word.word, score: word.score, definition: word.defs ? word.defs[0] : "No definition available" })
                 this.delay(100)
                 this.props.addNode({
                     node: {
@@ -287,13 +385,43 @@ class FindWordData extends React.Component {
                 color: "#6699ff",
                 type: 'diamond',
                 x: 0,
-                y: 0
+                y: 0,
+                dashboardComponents: [{
+                    type: 'area',
+                    name: 'Word Relevance',
+                    size: 8,
+                    data: [],
+                    color1: '#6699ff',
+                    color2: '#4d88ff',
+                    yAxis: true,
+                    xAxis: true,
+                    VGridLine: true,
+                    HGridLine: true,
+                }, {
+                    type: 'single-stat',
+                    name: 'Word Count',
+                    size: 8,
+                    data: { value: 0, label: "Word(s)" },
+                    color: 'blue',
+                    yAxis: true,
+                    xAxis: true,
+                    VGridLine: true,
+                    HGridLine: true,
+                },
+                {
+                    type: 'list',
+                    name: 'Word List',
+                    size: 8,
+                    data: [],
+                    color: 'blue',
+
+                },]
             },
             edge: {
                 id: "synonyms",
                 source: 'main-node',
                 target: 'synonyms',
-                type: 'dashed',
+                type: 'parallel',
                 color: "#6699ff",
             }
         }
@@ -302,7 +430,9 @@ class FindWordData extends React.Component {
 
         if (this.state.synonyms && this.state.synonyms.length > 0) {
             this.state.synonyms.forEach((word) => {
-
+                synonyms.node.dashboardComponents[0].data.push({ x: word.word, y: word.score })
+                synonyms.node.dashboardComponents[1].data.value += 1
+                synonyms.node.dashboardComponents[2].data.push({ word: word.word, score: word.score, definition: word.defs ? word.defs[0] : "No definition available" })
                 this.delay(100)
                 this.props.addNode({
                     node: {

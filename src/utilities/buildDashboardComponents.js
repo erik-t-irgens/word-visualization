@@ -2,6 +2,7 @@ import React from "react";
 import Chart from '../SharedComponents/Chart';
 import ErrorBlock from '../SharedComponents/ErrorBlock'
 import SingleStatistic from '../SharedComponents/SingleStat';
+import List from '../SharedComponents/List';
 
 const handleBuildComponent = (component) => {
 
@@ -13,7 +14,7 @@ const handleBuildComponent = (component) => {
         case 'linemark': {
             return (
                 <Chart
-                    apiUrl={component.apiUrl}
+
                     type={component.type}
                     data={component.data}
                     yAxis={component.yAxis || true}
@@ -28,7 +29,13 @@ const handleBuildComponent = (component) => {
         }
         case 'single-stat': {
             return (<SingleStatistic
-                apiUrl={component.apiUrl}
+
+                color={component.color}
+                data={component.data} />);
+        }
+        case 'list': {
+            return (<List
+
                 color={component.color}
                 data={component.data} />);
         }
