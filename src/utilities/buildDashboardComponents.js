@@ -3,6 +3,7 @@ import Chart from '../SharedComponents/Chart';
 import ErrorBlock from '../SharedComponents/ErrorBlock'
 import SingleStatistic from '../SharedComponents/SingleStat';
 import List from '../SharedComponents/List';
+import Definition from '../SharedComponents/Definition';
 
 const handleBuildComponent = (component) => {
 
@@ -35,6 +36,12 @@ const handleBuildComponent = (component) => {
         }
         case 'list': {
             return (<List
+
+                color={component.color}
+                data={component.data} />);
+        }
+        case 'definition': {
+            return (<Definition
 
                 color={component.color}
                 data={component.data} />);

@@ -142,7 +142,7 @@ class FindWordData extends React.Component {
                 y: 0,
                 dashboardComponents: [{
                     type: 'bar',
-                    name: 'Word Relevance',
+                    name: 'Word Scores',
                     size: 8,
                     data: [],
                     color1: '#66ffcc',
@@ -196,7 +196,24 @@ class FindWordData extends React.Component {
                         x: 0,
                         y: 0,
                         score: word.score,
-                        syllables: word.numSylables
+                        syllables: word.numSylables,
+                        dashboardComponents: [{
+                            type: 'definition',
+                            name: 'Definition',
+                            size: 8,
+                            data: { word: word.word, definition: word.defs ? word.defs : ["No definition available"] },
+                            color: 'teal',
+
+                        },
+                        {
+                            type: 'single-stat',
+                            name: 'Word Score',
+                            size: 8,
+                            data: { value: word.score, label: "Score" },
+                            color: 'teal',
+
+                        },
+                        ]
                     },
                     edge: {
                         id: word.word + 'edge' + 'rhymes',
@@ -223,7 +240,7 @@ class FindWordData extends React.Component {
                 y: 0,
                 dashboardComponents: [{
                     type: 'bar',
-                    name: 'Word Relevance',
+                    name: 'Word Scores',
                     size: 8,
                     data: [],
                     color1: '#ffcc66',
@@ -279,7 +296,24 @@ class FindWordData extends React.Component {
                         x: 0,
                         y: 0,
                         score: word.score,
-                        syllables: word.numSylables
+                        syllables: word.numSylables,
+                        dashboardComponents: [{
+                            type: 'definition',
+                            name: 'Definition',
+                            size: 8,
+                            data: { word: word.word, definition: word.defs ? word.defs : ["No definition available"] },
+                            color: 'yellow',
+
+                        },
+                        {
+                            type: 'single-stat',
+                            name: 'Word Score',
+                            size: 8,
+                            data: { value: word.score, label: "Score" },
+                            color: 'yellow',
+
+                        },
+                        ]
                     },
                     edge: {
                         id: word.word + 'edge' + 'associated',
@@ -306,7 +340,7 @@ class FindWordData extends React.Component {
                 y: 0,
                 dashboardComponents: [{
                     type: 'bar',
-                    name: 'Word Relevance',
+                    name: 'Word Scores',
                     size: 8,
                     data: [],
                     color1: '#ff6666',
@@ -362,7 +396,24 @@ class FindWordData extends React.Component {
                         x: 0,
                         y: 0,
                         score: word.score,
-                        syllables: word.numSylables
+                        syllables: word.numSylables,
+                        dashboardComponents: [{
+                            type: 'definition',
+                            name: 'Definition',
+                            size: 8,
+                            data: { word: word.word, definition: word.defs ? word.defs : ["No definition available"] },
+                            color: 'red',
+
+                        },
+                        {
+                            type: 'single-stat',
+                            name: 'Word Score',
+                            size: 8,
+                            data: { value: word.score, label: "Score" },
+                            color: 'red',
+
+                        },
+                        ]
                     },
                     edge: {
                         id: word.word + 'edge' + 'antonyms',
@@ -388,7 +439,7 @@ class FindWordData extends React.Component {
                 y: 0,
                 dashboardComponents: [{
                     type: 'area',
-                    name: 'Word Relevance',
+                    name: 'Word Scores',
                     size: 8,
                     data: [],
                     color1: '#6699ff',
@@ -444,7 +495,24 @@ class FindWordData extends React.Component {
                         x: 0,
                         y: 0,
                         score: word.score,
-                        syllables: word.numSylables
+                        syllables: word.numSylables,
+                        dashboardComponents: [{
+                            type: 'definition',
+                            name: 'Definition',
+                            size: 8,
+                            data: { word: word.word, definition: word.defs ? word.defs : ["No definition available"] },
+                            color: 'blue',
+
+                        },
+                        {
+                            type: 'single-stat',
+                            name: 'Word Score',
+                            size: 8,
+                            data: { value: word.score, label: "Score" },
+                            color: 'blue',
+
+                        },
+                        ]
                     },
                     edge: {
                         id: word.word + 'edge' + 'SYNONYMS',

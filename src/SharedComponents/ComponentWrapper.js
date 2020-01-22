@@ -42,6 +42,9 @@ class ComponentWrapper extends React.Component {
             case 'list': {
                 return 'numbered list'
             }
+            case 'definition': {
+                return 'book'
+            }
             default: {
                 // If unrecognized, return an X error icon.
                 return 'x';
