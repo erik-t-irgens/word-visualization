@@ -1,3 +1,4 @@
+export const INIT_GRAPH = 'init_graph'
 export const ADD_NODE = 'add_node'
 export const REMOVE_NODE = 'remove_node'
 export const UPDATE_NODE = 'update_node'

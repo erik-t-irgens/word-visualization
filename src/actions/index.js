@@ -1,12 +1,17 @@
 import {
     ADD_NODE, REMOVE_NODE, UPDATE_NODE,
-    ADD_GRAPH_FILTER, CLEAR_GRAPH_FILTER, CHANGE_LAYOUT_DIRECTION, TOGGLE_LABEL_VISIBILITY
+    ADD_GRAPH_FILTER, CLEAR_GRAPH_FILTER, CHANGE_LAYOUT_DIRECTION, TOGGLE_LABEL_VISIBILITY, INIT_GRAPH
 } from './types';
 
 // DASHBOARD GRAPH ALTERATION
 
 export const addNode = (newNode) => ({
     type: ADD_NODE,
+    payload: { newNode }
+})
+
+export const initGraph = (newNode) => ({
+    type: INIT_GRAPH,
     payload: { newNode }
 })
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Icon, Button, Form, Transition, Radio, Grid } from 'semantic-ui-react';
 import { Slider } from "react-semantic-ui-range";
-import { addNode, removeNode, addGraphFilter, clearGraphFilter, changeLayoutDirection, toggleLabelVisibility } from "../../../actions/index";
+import { addNode, initGraph, removeNode, addGraphFilter, clearGraphFilter, changeLayoutDirection, toggleLabelVisibility } from "../../../actions/index";
 import { connect } from "react-redux";
 
 
@@ -343,7 +343,7 @@ class FindWordData extends React.Component {
             this.handleDeleteNode(this.props.dashboardGraph.graphToDisplay.nodes.find(node => node.id === "main-node"))
         }
         this.delay(200)
-        this.props.addNode({
+        this.props.initGraph({
             node: {
                 id: "main-node",
                 label: term,
@@ -542,7 +542,7 @@ function mapStateToProps({ dashboardGraph }) {
 }
 
 const mapDispatchToProps = {
-    addNode, removeNode, addGraphFilter, clearGraphFilter, changeLayoutDirection, toggleLabelVisibility
+    addNode, initGraph, removeNode, addGraphFilter, clearGraphFilter, changeLayoutDirection, toggleLabelVisibility
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FindWordData);
