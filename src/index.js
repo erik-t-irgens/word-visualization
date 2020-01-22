@@ -13,6 +13,7 @@ import rootReducer from './reducers';
 import * as serviceWorker from './serviceWorker';
 
 let store = createStore(rootReducer, applyMiddleware(thunk));
+window.store = store;
 
 ReactDOM.render(
     <Provider store={store}>
