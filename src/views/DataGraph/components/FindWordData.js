@@ -180,11 +180,12 @@ class FindWordData extends React.Component {
         this.props.addNode(rhymes)
 
         if (this.state.rhymes && this.state.rhymes.length > 0) {
+            let dataPushArray = []
             this.state.rhymes.forEach((word) => {
-                rhymes.node.dashboardComponents[0].data.push({ x: word.word, y: word.score })
+                dataPushArray.push({ x: word.word, y: word.score })
                 rhymes.node.dashboardComponents[1].data.value += 1
                 rhymes.node.dashboardComponents[2].data.push({ word: word.word, score: word.score, definition: word.defs ? word.defs[0] : "No definition available" })
-                this.delay(100)
+
                 console.log(word)
                 this.props.addNode({
                     node: {
@@ -223,6 +224,7 @@ class FindWordData extends React.Component {
                     }
                 });
             })
+            rhymes.node.dashboardComponents[0].data = [...dataPushArray.reverse()]
         }
 
     }
@@ -281,11 +283,12 @@ class FindWordData extends React.Component {
         this.props.addNode(associated)
 
         if (this.state.associated && this.state.associated.length > 0) {
+            let dataPushArray = []
             this.state.associated.forEach((word) => {
-                associated.node.dashboardComponents[0].data.push({ x: word.word, y: word.score })
+                dataPushArray.push({ x: word.word, y: word.score })
                 associated.node.dashboardComponents[1].data.value += 1
                 associated.node.dashboardComponents[2].data.push({ word: word.word, score: word.score, definition: word.defs ? word.defs[0] : "No definition available" })
-                this.delay(100)
+
                 this.props.addNode({
                     node: {
                         id: word.word,
@@ -324,6 +327,7 @@ class FindWordData extends React.Component {
                     }
                 });
             })
+            associated.node.dashboardComponents[0].data = [...dataPushArray.reverse()]
         }
     }
 
@@ -381,11 +385,12 @@ class FindWordData extends React.Component {
         this.props.addNode(antonyms)
 
         if (this.state.antonyms && this.state.antonyms.length > 0) {
+            let dataPushArray = []
             this.state.antonyms.forEach((word) => {
-                antonyms.node.dashboardComponents[0].data.push({ x: word.word, y: word.score })
+                dataPushArray.push({ x: word.word, y: word.score })
                 antonyms.node.dashboardComponents[1].data.value += 1
                 antonyms.node.dashboardComponents[2].data.push({ word: word.word, score: word.score, definition: word.defs ? word.defs[0] : "No definition available" })
-                this.delay(100)
+
                 this.props.addNode({
                     node: {
                         id: word.word,
@@ -423,6 +428,7 @@ class FindWordData extends React.Component {
                     }
                 });
             })
+            antonyms.node.dashboardComponents[0].data = [...dataPushArray.reverse()]
         }
     }
 
@@ -480,11 +486,12 @@ class FindWordData extends React.Component {
         this.props.addNode(synonyms)
 
         if (this.state.synonyms && this.state.synonyms.length > 0) {
+            let dataPushArray = []
             this.state.synonyms.forEach((word) => {
-                synonyms.node.dashboardComponents[0].data.push({ x: word.word, y: word.score })
+                dataPushArray.push({ x: word.word, y: word.score })
                 synonyms.node.dashboardComponents[1].data.value += 1
                 synonyms.node.dashboardComponents[2].data.push({ word: word.word, score: word.score, definition: word.defs ? word.defs[0] : "No definition available" })
-                this.delay(100)
+
                 this.props.addNode({
                     node: {
                         id: word.word,
@@ -522,6 +529,7 @@ class FindWordData extends React.Component {
                 });
 
             })
+            synonyms.node.dashboardComponents[0].data = [...dataPushArray.reverse()]
         }
     }
     handleDeleteNode = (incomingNode) => {
@@ -536,11 +544,10 @@ class FindWordData extends React.Component {
     }
 
     handleQueryWord = (term) => {
-
         if (this.props.dashboardGraph.graphToDisplay.nodes.find(node => node.id === "main-node")) {
             this.handleDeleteNode(this.props.dashboardGraph.graphToDisplay.nodes.find(node => node.id === "main-node"))
         }
-        this.delay(200)
+
         this.props.initGraph({
             node: {
                 id: "main-node",
@@ -564,8 +571,10 @@ class FindWordData extends React.Component {
 
         fetch(`https://api.datamuse.com/words?rel_syn=` + term + "&md=dpsrf")
             .then(res => res.json())
-            .then(result =>
+            .then(result => {
+                console.log(result)
                 this.setState({ synonyms: result.slice(0, this.state.sliderValue) })
+            }
             )
 
         fetch(`https://api.datamuse.com/words?rel_ant=` + term + "&md=dpsrf")
