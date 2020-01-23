@@ -141,7 +141,7 @@ class FindWordData extends React.Component {
                 x: 0,
                 y: 0,
                 dashboardComponents: [{
-                    type: 'bar',
+                    type: 'mark',
                     name: 'Word Scores',
                     size: 8,
                     data: [],

@@ -28,10 +28,10 @@ class DashboardComponent extends React.Component {
             // Dummy component objects array with mock data
             componentObjects: [
                 {
-                    type: 'linemark',
+                    type: 'mark',
                     name: 'Name of the data',
                     size: 8,
-                    apiUrl: 'db/getCWRedHunterParameterReducer',
+                    data: objectData.mockData1,
                     color1: '#8ae330',
                     color2: '#4caa1a',
                     yAxis: true,
@@ -41,10 +41,10 @@ class DashboardComponent extends React.Component {
                 },
 
                 {
-                    type: 'area',
+                    type: 'bar',
                     name: 'Name of the data',
                     size: 8,
-                    apiUrl: 'db/getCWRedHunterReducer',
+                    data: objectData.mockData2,
                     color1: '#8ae330',
                     color2: '#4caa1a',
                     yAxis: true,
@@ -53,10 +53,10 @@ class DashboardComponent extends React.Component {
                     HGridLine: true,
                 },
                 {
-                    type: 'bar',
+                    type: 'area',
                     name: 'Name of the data',
                     size: 8,
-                    apiUrl: 'db/getCWRedHunter',
+                    data: objectData.mockData3,
                     color1: '#c10f7c',
                     color2: '#e2107f',
                     yAxis: true,
@@ -118,23 +118,23 @@ class DashboardComponent extends React.Component {
                 },
 
 
-                {
-                    type: 'single-stat',
-                    name: 'Pages Scraped',
-                    apiUrl: 'db/getPagesScraped',
-                    size: 8,
-                    color: 'teal',
-                    color1: 'blue',
-                    color2: '',
-                },
+                // {
+                //     type: 'single-stat',
+                //     name: 'Pages Scraped',
+                //     apiUrl: 'db/getPagesScraped',
+                //     size: 8,
+                //     color: 'teal',
+                //     color1: 'blue',
+                //     color2: '',
+                // },
 
-                {
-                    type: 'single-stat',
-                    name: 'Total Pages Scraped',
-                    apiUrl: 'db/getPagesScraped',
-                    size: 8,
+                // {
+                //     type: 'single-stat',
+                //     name: 'Total Pages Scraped',
+                //     apiUrl: 'db/getPagesScraped',
+                //     size: 8,
 
-                },
+                // },
 
 
 

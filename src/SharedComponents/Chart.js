@@ -27,10 +27,10 @@ class Chart extends React.Component {
         this.state = {
             isLoading: true,
             crosshairValues: [],
-            yAxis: true,
-            xAxis: true,
-            VGridLine: true,
-            HGridLine: true,
+            yAxis: false,
+            xAxis: false,
+            VGridLine: false,
+            HGridLine: false,
             size: 'scale(1.2)  translate(0px, 20px)',
             visibleSummary: true,
             opacity: .5,
@@ -65,6 +65,7 @@ class Chart extends React.Component {
 
         if (this.state.VGridLine) {
             this.setState({ crosshairValues: [{ x: this.state.data[index].x, y: this.state.data[index].y }] })
+            console.log({ x: this.state.data[index].x, y: this.state.data[index].y })
         }
 
     }, 1);
@@ -94,7 +95,7 @@ class Chart extends React.Component {
         }
         const commonSeriesProps = {
             color: `url(#${gradientId})`,
-            onNearestX: this._onNearestX,
+            // onNearestX: this._onNearestX,
             animation: true,
             data: data,
             curve: 'curveMonotoneX'
@@ -119,6 +120,7 @@ class Chart extends React.Component {
                             onMouseEnter={this._onMouseEnter}
                             style={{ transition: 'transform 100ms', transform: size, opacity: opacity }}
                             {...colorProps}
+
                         >
 
 
@@ -204,11 +206,15 @@ class Chart extends React.Component {
                                                     /> :
                                                     null
                             }
-                            <Crosshair
+                            {/* <Crosshair
                                 values={this.state.crosshairValues}
-                                className='test'
-
-                            />
+                                className='test'>
+                                <div style={{ background: 'black' }}>
+                                    <h3>Values of crosshair:</h3>
+                                    <p>Series 1: {this.state.crosshairValues.length > 0 ? this.state.crosshairValues[0].x : null}</p>
+                                    <p>Series 2: {this.state.crosshairValues.length > 0 ? this.state.crosshairValues[0].y : null}</p>
+                                </div>
+                            </Crosshair> */}
                         </FlexibleXYPlot>
                     }
                 </div> :

@@ -8,13 +8,12 @@ import UpdateNodeProps from "./components/UpdateNodeProps"
 import NodeSummary from "./components/NodeSummary";
 import NodeCreationForm from "./components/NodeCreationForm";
 import AddNode from "./components/AddNode";
-import GraphOptions from "./components/GraphOptions";
 import GraphTutorial from "./components/GraphTutorial/index";
 import FindWordData from "./components/FindWordData"
 // Redux
 import { addNode, removeNode, updateNode, addGraphFilter, clearGraphFilter } from "../../actions/index";
 import { connect } from "react-redux";
-import { Search } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 
 class SigmaComponent extends React.Component {
     constructor(props) {
@@ -23,7 +22,8 @@ class SigmaComponent extends React.Component {
             summaryVisible: false,
             nodeData: null,
             filter: this.props.dashboardGraphFilter.filter,
-            editMode: false
+            editMode: false,
+            findWordData: true
         }
     }
 
@@ -88,7 +88,7 @@ class SigmaComponent extends React.Component {
 
     render() {
 
-        const { summaryVisible, newNodeDataInheritance, formVisible, hoverX, hoverY, addNodeVisible, editMode, hoveredNodePossibleChildren } = this.state;
+        const { summaryVisible, newNodeDataInheritance, formVisible, hoverX, hoverY, addNodeVisible, editMode, hoveredNodePossibleChildren, findWordData } = this.state;
         const { graphToDisplay } = this.props.dashboardGraph;
         const { filter, layout } = this.props.dashboardGraphFilter
 
@@ -168,9 +168,15 @@ class SigmaComponent extends React.Component {
                             width: "100vw",
                             position: "absolute",
                             // Height of the graph port to accomodate for the header
-                            height: "88vh"
+                            height: "100vh"
                         }}
                     >
+                        {findWordData ?
+                            <Icon style={{ cursor: "pointer", position: 'absolute', top: "10px", left: "100px" }} onClick={() => this.setState({ findWordData: !findWordData })} size="large" link inverted name="eye slash"></Icon>
+                            :
+                            <Icon style={{ cursor: "pointer", position: 'absolute', top: "10px", left: "100px" }} onClick={() => this.setState({ findWordData: !findWordData })} size="large" link inverted name="eye slash"></Icon>
+                        }
+
                         {formVisible ?
                             <NodeCreationForm data={newNodeDataInheritance} onSubmit={this.handleSubmit} closeModal={this.handleCloseNodeForm}></NodeCreationForm>
                             :
@@ -215,9 +221,9 @@ class SigmaComponent extends React.Component {
                             />
                         }
 
+                        {findWordData ? <FindWordData handleEditMode={this.handleEditMode} handleChangeFilter={this.handleChangeFilter}></FindWordData> : <></>}
 
 
-                        <FindWordData handleEditMode={this.handleEditMode} handleChangeFilter={this.handleChangeFilter}></FindWordData>
                         <GraphTutorial />
 
                         {filter.id ?
