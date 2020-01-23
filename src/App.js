@@ -35,7 +35,7 @@ class App extends Component {
                 {/* NOTE: greedy paths by default apparently. */}
                 <Route exact path={'/dashboard'} component={Dashboard} />
 
-                <Route path={'/DataGraph/'} component={DataGraph} />
+                <Route path={'/'} component={DataGraph} />
                 <Route path={'/'} status={404} component={NotFound} />
               </Switch>
             </Container>
