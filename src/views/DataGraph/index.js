@@ -1,16 +1,16 @@
 import React from 'react';
 import { Helmet } from "react-helmet/es/Helmet";
-// Sigma components
+
 import { Sigma, NodeShapes, Filter, RandomizeNodePositions, ForceAtlas2 } from 'react-sigma/lib/';
 import Dagre from 'react-sigma/lib/Dagre'
-// Custom components
-import UpdateNodeProps from "./components/UpdateNodeProps"
-import NodeSummary from "./components/NodeSummary";
-import NodeCreationForm from "./components/NodeCreationForm";
-import AddNode from "./components/AddNode";
+
+import ForceNodeUpdate from "./components/ForceNodeUpdate"
+import WordSummary from "./components/WordSummary";
+// import NodeCreationForm from "./components/NodeCreationForm";
+
 import GraphTutorial from "./components/GraphTutorial/index";
 import FindWordData from "./components/FindWordData"
-// Redux
+
 import { addNode, removeNode, updateNode, addGraphFilter, clearGraphFilter } from "../../actions/index";
 import { connect } from "react-redux";
 import { Icon } from 'semantic-ui-react';
@@ -20,76 +20,41 @@ class SigmaComponent extends React.Component {
         super(props)
         this.state = {
             summaryVisible: false,
-            nodeData: null,
+            nodeInfo: null,
             filter: this.props.dashboardGraphFilter.filter,
-            editMode: false,
+            treeLayout: false,
             findWordData: true
         }
-    }
-
-
-
-
-
-    // Show AddNode button (green +) for openning new node form.
-    handleHoverNode = (e) => {
-        // First, nullify these states so they are reset (this is a fix for needing to hover over a node more than once to display the add button)
-        this.setState({ hoverX: null, hoverY: null, edgeStatsVisible: false, })
-        // Then set them appropriately.
-        this.setState({ hoverX: e.data.captor.clientX, hoverY: e.data.captor.clientY + ((3 - e.data.renderer.camera.ratio) * 15), newNodeDataInheritance: e.data, addNodeVisible: true })
-        this.setState({ hoveredNodePossibleChildren: e.data.node.possibleChildren })
-    }
-
-
-    // Open new node form (when clicking green +)
-    handleClickAddNodeButton = (data) => {
-        // Shows form modal.
-        this.setState({ formVisible: true, })
-        // Hides the button once clicked.
-        this.handleHideNodeButton()
-    }
-
-    // Hides AddNode button (green +)
-    handleHideNodeButton = (e) => {
-        this.setState({ hoverX: null, hoverY: null, addNodeVisible: false })
-    }
-
-    // Close new node form
-    handleCloseNodeForm = () => {
-        this.setState({ formVisible: false, nodeData: null })
     }
 
     // Open gallery/summary
     handleClickNode = (e) => {
         this.setState({
-            summaryVisible: true, nodeData: e.data.node,
+            summaryVisible: true, nodeInfo: e.data.node,
             dashboardComponents: e.data.node.dashboardComponents
         })
-        console.log(e.data.node.dashboardComponents, "HEY LOOKY!")
     }
 
     // Close summary (gallery)
     handleCloseNodeSummary = () => {
-        this.setState({ summaryVisible: false, nodeData: null })
+        this.setState({ summaryVisible: false, nodeInfo: null })
     }
 
 
     componentDidMount = () => {
         document.body.style.backgroundColor = "#000";
-        // Hides the Add Node button when clicking anywhere else on the canvas.
-        document.getElementById("sigma-wrapper").addEventListener("mousedown", (e) => this.handleHideNodeButton(e))
     }
 
-    // Turns on edit mode, allowing for the user to edit the graph (add, remove nodes), which places the graph into a Dagre configuration for ease of use.
-    handleEditMode = () => {
-        this.setState({ editMode: !this.state.editMode })
+
+    handleGraphLayoutChange = () => {
+        this.setState({ treeLayout: !this.state.treeLayout })
     }
 
 
     render() {
 
-        const { summaryVisible, newNodeDataInheritance, formVisible, hoverX, hoverY, addNodeVisible, editMode, hoveredNodePossibleChildren, findWordData } = this.state;
-        const { graphToDisplay } = this.props.dashboardGraph;
+        const { summaryVisible, newNodeDataInheritance, formVisible, hoverX, hoverY, addNodeVisible, treeLayout, hoveredNodePossibleChildren, findWordData } = this.state;
+        const { displayedGraph } = this.props.dashboardGraph;
         const { filter, layout } = this.props.dashboardGraphFilter
 
         return (
@@ -97,94 +62,62 @@ class SigmaComponent extends React.Component {
                 <Helmet>
                     <title>Data Graph</title>
                 </Helmet>
-                {hoverX && addNodeVisible && editMode && hoveredNodePossibleChildren ?
-                    <div style={{
-                        position: "absolute",
-                        zIndex: 3,
-                        top: 0,
-                        left: 0
-                    }}
-                        onClick={() => this.handleClickAddNodeButton(newNodeDataInheritance)}>
-                        <AddNode clientX={hoverX} clientY={hoverY} ></AddNode>
-                    </div> :
-                    <></>
-                }
-
 
                 <div id="sigma-wrapper">
-                    {summaryVisible && this.state.nodeData ?
-                        <NodeSummary
-                            editMode={this.state.editMode}
+                    {summaryVisible && this.state.nodeInfo ?
+                        <WordSummary
+                            treeLayout={this.state.treeLayout}
                             dashboardComponents={this.state.dashboardComponents}
                             closeModal={this.handleCloseNodeSummary}
                             style={{ marginLeft: 'auto', marginRight: 'auto' }}
                             visible='true'
-                            data={this.state.nodeData}></NodeSummary>
+                            data={this.state.nodeInfo}></WordSummary>
                         :
                         null
                     }
 
-
-
                     <Sigma
                         renderer="canvas"
-                        graph={graphToDisplay}
+                        graph={displayedGraph}
                         onClickNode={this.handleClickNode}
-                        onOverNode={this.handleHoverNode}
 
                         // A list of other settings can be found here: https://github.com/jacomyal/sigma.js/wiki/Settings
                         settings={{
-                            // This setting enables for the ability to hover over edges. 
-                            // enableEdgeHovering: true,
-                            // defaultEdgeHoverColor: '#ffffff',
-                            // Sizes the edge that's hovered over.
-                            // edgeHoverSizeRatio: 2,
+
                             drawEdges: true,
                             edgeColor: "target",
-                            // It might be nice to be able to control the visibility of EdgeLabels using some sort of redux setting, but you can't update these settings in real time because sigma.refresh() breaks the component lifecycle
                             drawEdgeLabels: true,
-                            // edgeLabelThreshold: 20,
                             defaultEdgeLabelColor: "#d8d8d8",
-
                             minNodeSize: 5,
                             maxNodeSize: 30,
                             minEdgeSize: 5,
                             maxEdgeSize: 5,
-
                             clone: false,
                             verbose: false,
                             defaultNodeColor: "#ffffff",
                             borderSize: 2,
                             defaultNodeBorderColor: "#000",
-
                             defaultLabelColor: "#ffffff",
                             defaultLabelSize: 15,
                             defaultEdgeType: "dashed",
-                            // What size (from zoom level 1) of the edge will the label be dispalyed. 28 necessitates a slight zoom in to view.
                             labelThreshold: 5,
                             font: "arial",
                         }}
                         style={{
                             width: "100vw",
                             position: "absolute",
-                            // Height of the graph port to accomodate for the header
                             height: "100vh"
                         }}
                     >
                         {findWordData ?
-                            <Icon style={{ cursor: "pointer", position: 'absolute', top: "10px", left: "100px" }} onClick={() => this.setState({ findWordData: !findWordData })} size="large" link inverted name="eye slash"></Icon>
+                            <Icon style={{ cursor: "pointer", position: 'absolute', top: "10px", left: "100px" }} onClick={() => this.setState({ findWordData: !findWordData })} size="large" link inverted name="low vision"></Icon>
                             :
-                            <Icon style={{ cursor: "pointer", position: 'absolute', top: "10px", left: "100px" }} onClick={() => this.setState({ findWordData: !findWordData })} size="large" link inverted name="eye slash"></Icon>
+                            <Icon style={{ cursor: "pointer", position: 'absolute', top: "10px", left: "100px" }} onClick={() => this.setState({ findWordData: !findWordData })} size="large" link inverted name="eye"></Icon>
                         }
 
-                        {formVisible ?
-                            <NodeCreationForm data={newNodeDataInheritance} onSubmit={this.handleSubmit} closeModal={this.handleCloseNodeForm}></NodeCreationForm>
-                            :
-                            <></>
-                        }
                         <NodeShapes default="diamond" />
 
-                        {!editMode ?
+                        {!treeLayout ?
                             // RandomizeNodepOsitions is necessary for ForceAtlas to function
                             <RandomizeNodePositions>
 
@@ -221,13 +154,12 @@ class SigmaComponent extends React.Component {
                             />
                         }
 
-                        {findWordData ? <FindWordData handleEditMode={this.handleEditMode} handleChangeFilter={this.handleChangeFilter}></FindWordData> : <></>}
+                        {findWordData ? <FindWordData handleGraphLayoutChange={this.handleGraphLayoutChange} handleChangeFilter={this.handleChangeFilter}></FindWordData> : <></>}
 
 
                         <GraphTutorial />
 
                         {filter.id ?
-
                             <Filter
                                 nodesBy={(node) => node.party === filter.party || node.id === "customer" || node.id === filter.id}
                             /> :
@@ -236,7 +168,7 @@ class SigmaComponent extends React.Component {
                             />
                         }
 
-                        <UpdateNodeProps nodes={graphToDisplay.nodes} edges={graphToDisplay.edges} />
+                        <ForceNodeUpdate nodes={displayedGraph.nodes} edges={displayedGraph.edges} />
                         <NodeShapes default="circle" />
                     </Sigma>
                 </div>

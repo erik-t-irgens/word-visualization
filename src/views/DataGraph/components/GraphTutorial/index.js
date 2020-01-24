@@ -77,9 +77,8 @@ class GraphTurorial extends React.Component {
                     inverted
                     size='mini'
                     animated='vertical'
-                    circular
+                    // circular
                     style={{
-
                         textAlign: 'center'
                     }}
                     onClick={this.handleShowTutorial}>

@@ -10,7 +10,7 @@ class FindWordData extends React.Component {
         super(props)
         this.state = {
             visible: this.props.visible,
-            isLoading: true,
+            loadingState: true,
             data: [],
             searchQuery: '',
             formVisible: false,
@@ -109,9 +109,9 @@ class FindWordData extends React.Component {
 
 
     // Enables edit mode here and in index.
-    handleEditMode = () => {
-        this.props.handleEditMode()
-        this.setState((prevState) => ({ editMode: !prevState.editMode }))
+    handleGraphLayoutChange = () => {
+        this.props.handleGraphLayoutChange()
+        this.setState((prevState) => ({ treeLayout: !prevState.treeLayout }))
     }
 
     delay = (duration) => new Promise(resolve => setTimeout(resolve, duration));
@@ -141,7 +141,7 @@ class FindWordData extends React.Component {
                 x: 0,
                 y: 0,
                 dashboardComponents: [{
-                    type: 'mark',
+                    type: 'area',
                     name: 'Word Scores',
                     size: 8,
                     data: [],
@@ -185,8 +185,6 @@ class FindWordData extends React.Component {
                 dataPushArray.push({ x: word.word, y: word.score })
                 rhymes.node.dashboardComponents[1].data.value += 1
                 rhymes.node.dashboardComponents[2].data.push({ word: word.word, score: word.score, definition: word.defs ? word.defs[0] : "No definition available" })
-
-                console.log(word)
                 this.props.addNode({
                     node: {
                         id: word.word,
@@ -241,7 +239,7 @@ class FindWordData extends React.Component {
                 x: 0,
                 y: 0,
                 dashboardComponents: [{
-                    type: 'bar',
+                    type: 'area',
                     name: 'Word Scores',
                     size: 8,
                     data: [],
@@ -343,7 +341,7 @@ class FindWordData extends React.Component {
                 x: 0,
                 y: 0,
                 dashboardComponents: [{
-                    type: 'bar',
+                    type: 'area',
                     name: 'Word Scores',
                     size: 8,
                     data: [],
@@ -533,9 +531,9 @@ class FindWordData extends React.Component {
         }
     }
     handleDeleteNode = (incomingNode) => {
-        const edgesToRemove = this.props.dashboardGraph.graphToDisplay.edges.filter(edge => edge.source === incomingNode.id)
+        const edgesToRemove = this.props.dashboardGraph.displayedGraph.edges.filter(edge => edge.source === incomingNode.id)
         let nodesToRemove = []
-        edgesToRemove.forEach(edge => nodesToRemove = [...nodesToRemove, ...this.props.dashboardGraph.graphToDisplay.nodes.filter(node => node.id === edge.target)])
+        edgesToRemove.forEach(edge => nodesToRemove = [...nodesToRemove, ...this.props.dashboardGraph.displayedGraph.nodes.filter(node => node.id === edge.target)])
         this.props.removeNode(incomingNode)
         if (nodesToRemove.length > 0) {
             nodesToRemove.forEach(node => this.handleDeleteNode(node))
@@ -544,8 +542,8 @@ class FindWordData extends React.Component {
     }
 
     handleQueryWord = (term) => {
-        if (this.props.dashboardGraph.graphToDisplay.nodes.find(node => node.id === "main-node")) {
-            this.handleDeleteNode(this.props.dashboardGraph.graphToDisplay.nodes.find(node => node.id === "main-node"))
+        if (this.props.dashboardGraph.displayedGraph.nodes.find(node => node.id === "main-node")) {
+            this.handleDeleteNode(this.props.dashboardGraph.displayedGraph.nodes.find(node => node.id === "main-node"))
         }
 
         this.props.initGraph({
@@ -572,7 +570,6 @@ class FindWordData extends React.Component {
         fetch(`https://api.datamuse.com/words?rel_syn=` + term + "&md=dpsrf")
             .then(res => res.json())
             .then(result => {
-                console.log(result)
                 this.setState({ synonyms: result.slice(0, this.state.sliderValue) })
             }
             )
@@ -609,9 +606,9 @@ class FindWordData extends React.Component {
     handleSubmit = () => {
         this.handleQueryWord(this.state.queryString)
 
-        if (!this.state.editMode) {
-            this.setState({ editMode: true })
-            this.props.handleEditMode()
+        if (!this.state.treeLayout) {
+            this.setState({ treeLayout: true })
+            this.props.handleGraphLayoutChange()
         }
 
 
@@ -620,7 +617,7 @@ class FindWordData extends React.Component {
 
     render() {
 
-        const { editMode, done, rhymes, associated, antonyms, synonyms, settings, sliderValue } = this.state;
+        const { treeLayout, done, rhymes, associated, antonyms, synonyms, settings, sliderValue } = this.state;
         return (
 
             <div style={{
@@ -668,7 +665,7 @@ class FindWordData extends React.Component {
 
                                 <Grid.Column >
                                     <h3 style={{ left: '50%', translate: "transform (-50%, -50%)" }}>Layout</h3>
-                                    {!editMode ? <Form.Field>Current Layout: <b>Gravitational Graph</b></Form.Field>
+                                    {!treeLayout ? <Form.Field>Current Layout: <b>Gravitational Graph</b></Form.Field>
                                         : <Form.Field>Current Layout: <b>Tree Graph</b></Form.Field>}
                                     <Grid columns="equal" divided inverted>
                                         <Grid.Row >
@@ -676,27 +673,27 @@ class FindWordData extends React.Component {
 
                                                 <Form.Field>
                                                     <label style={{ color: 'white' }}>Switch Layout</label>
-                                                    <Icon size="big" inverted disabled={editMode} name="snowflake outline"></Icon>
+                                                    <Icon size="big" inverted disabled={treeLayout} name="snowflake outline"></Icon>
                                                     <Radio
                                                         slider
                                                         name='editModeToggle'
-                                                        checked={this.state.editMode}
-                                                        onChange={this.handleEditMode}
+                                                        checked={this.state.treeLayout}
+                                                        onChange={this.handleGraphLayoutChange}
                                                     />
-                                                    <Icon size="big" inverted disabled={!editMode} name="tree"></Icon>
+                                                    <Icon size="big" inverted disabled={!treeLayout} name="tree"></Icon>
                                                 </Form.Field>
                                             </Grid.Column>
 
                                             <Grid.Column>
                                                 <Button.Group style={{ marginTop: '20px' }}>
                                                     <Button inverted icon='arrow down'
-                                                        onClick={() => this.handleChangeLayoutDirection('TB')} disabled={!editMode} />
+                                                        onClick={() => this.handleChangeLayoutDirection('TB')} disabled={!treeLayout} />
                                                     <Button inverted icon='arrow up'
-                                                        onClick={() => this.handleChangeLayoutDirection('BT')} disabled={!editMode} />
+                                                        onClick={() => this.handleChangeLayoutDirection('BT')} disabled={!treeLayout} />
                                                     <Button inverted icon='arrow right'
-                                                        onClick={() => this.handleChangeLayoutDirection('LR')} disabled={!editMode} />
+                                                        onClick={() => this.handleChangeLayoutDirection('LR')} disabled={!treeLayout} />
                                                     <Button inverted icon='arrow left'
-                                                        onClick={() => this.handleChangeLayoutDirection('RL')} disabled={!editMode} />
+                                                        onClick={() => this.handleChangeLayoutDirection('RL')} disabled={!treeLayout} />
                                                 </Button.Group>
                                             </Grid.Column>
                                         </Grid.Row>

@@ -25,7 +25,7 @@ class Chart extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            isLoading: true,
+            loadingState: true,
             crosshairValues: [],
             yAxis: false,
             xAxis: false,
@@ -41,10 +41,10 @@ class Chart extends React.Component {
 
     componentDidMount = () => {
         // Calls the data from provided apiUrl
-        this.props.data ? this.setState({ data: this.props.data, isLoading: true }, () => this.setState({ isLoading: false })) :
-            this.setState({ data: [{ x: 0, y: 0 }], isLoading: false })
+        this.props.data ? this.setState({ data: this.props.data, loadingState: true }, () => this.setState({ loadingState: false })) :
+            this.setState({ data: [{ x: 0, y: 0 }], loadingState: false })
 
-        this.setState({ isLoading: false, gradientId: this.props.type + Math.floor(Math.random() * 1000) })
+        this.setState({ loadingState: false, gradientId: this.props.type + Math.floor(Math.random() * 1000) })
     }
 
     // Shows in depth graph information
@@ -65,7 +65,6 @@ class Chart extends React.Component {
 
         if (this.state.VGridLine) {
             this.setState({ crosshairValues: [{ x: this.state.data[index].x, y: this.state.data[index].y }] })
-            console.log({ x: this.state.data[index].x, y: this.state.data[index].y })
         }
 
     }, 1);
@@ -89,7 +88,7 @@ class Chart extends React.Component {
     render() {
 
         const { type, height, color1, color2 } = this.props;
-        const { yAxis, xAxis, VGridLine, HGridLine, gradientId, size, visibleSummary, opacity, isLoading, data } = this.state;
+        const { yAxis, xAxis, VGridLine, HGridLine, gradientId, size, visibleSummary, opacity, loadingState, data } = this.state;
         const colorProps = {
             color: `url(#${gradientId})`,
         }
@@ -103,9 +102,9 @@ class Chart extends React.Component {
 
 
         return (
-            !isLoading ?
+            !loadingState ?
                 <div style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>
-                    {visibleSummary && !isLoading ?
+                    {visibleSummary && !loadingState ?
                         <Statistic size='small' inverted style={{ zIndex: 1, position: 'absolute', textShadow: '5px 5px 5px #1c1c1c' }}>
                             <Statistic.Value>{typeof data[data.length - 1].y === 'number' ? Math.floor(data[data.length - 1].y) : data[data.length - 1].y}</Statistic.Value>
                             <Statistic.Label>{data[data.length - 1].x}</Statistic.Label>
@@ -219,7 +218,7 @@ class Chart extends React.Component {
                     }
                 </div> :
                 <div>
-                    <Dimmer as={Segment} active={isLoading}>
+                    <Dimmer as={Segment} active={loadingState}>
                         <Loader>Loading</Loader>
                     </Dimmer>
                 </div>

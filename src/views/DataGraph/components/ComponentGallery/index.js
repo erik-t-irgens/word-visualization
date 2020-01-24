@@ -12,14 +12,14 @@ class ComponentGallery extends React.Component {
             animationDirection: '',
         }
     }
-    // Make sure to reset to 0, in case there are more or fewer slides in the next render
+
     componentDidMount = () => {
         this.setState({ currentSlide: 0, currentButton: 0 })
     }
 
     delay = (duration) => new Promise(resolve => setTimeout(resolve, duration));
 
-    // Deals with hiding the current slide, then transitioning to the next slide. Only one slide is rendered at a time, but the animation being passed into the GallerySlide prop (as animationDirection from animationDirection in state) makes it seem like there is a true gallery with true slides.
+
     handleChangeCurrentSlide = async (value) => {
         // Hide current slide
         if (value === 'increment') {
@@ -34,7 +34,7 @@ class ComponentGallery extends React.Component {
             })
         }
 
-        // This will ensure that the animation has time to render before setting the state to display the next slide.
+        // Wait for animation to complete
         await this.delay(200)
 
         // Render next/prev slide
@@ -64,12 +64,13 @@ class ComponentGallery extends React.Component {
 
                             centerVisible={centerVisible}
                             animationDirection={animationDirection}
-                            // // TODO This "component" should receive props from the NODE which is clicked to show what type of componnets will be rendered from that node. For now, hard coded.  
                             component={data[currentSlide]} />
                         <GalleryButtons
                             maxPage={data.length - 1 || 0}
                             currentPage={currentSlide}
-                            functionality={this.handleChangeCurrentSlide}></GalleryButtons> </>
+                            functionality={this.handleChangeCurrentSlide}>
+                        </GalleryButtons>
+                    </>
                     :
                     <>
                     </>

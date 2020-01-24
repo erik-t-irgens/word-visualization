@@ -1,4 +1,38 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Word Visualization
+
+#### _An application intended to allow users to search for relevant words related to their initial search, intended to display this information with data visualization libraries and frameworks. Jan 24, 2020_
+
+#### _By **Erik Irgens**_
+
+## Description
+
+This application is designed to accomplish the following, in short: 
+1. Allow the user to submit a term and retrieve Synonyms, Antonyms, Associated words, and Rhymes of the initial query term
+2. Allow the user to browse these results in a dynamic way, using both sigma.js and react-vis data visualizations libraries.
+3. Dynamically alter the view of the data visualization by adding nodes, removing nodes, and altering the layout of the nodes displayed.
+
+
+
+## Setup/Installation Requirements
+
+1. Clone this repository:
+    ```
+    $ git clone https://github.com/erik-t-irgens/word-visualization
+    ```
+2. Install the dependencies
+    ```
+    $ npm install
+    ```
+3. Run the application in the root directory
+    ```
+    $ npm start
+    ```
+4. If ```$ npm start``` doesn't automatically direct you to your default browser, visit the MVC localhost:3000/
+    ```
+    localhost:3000/
+    ```
+## Technologies Used
+* JavaScript, CSS, HTML, React, Node, yarn, react-vis, sigma.js, Semantic UI React
 
 ## Available Scripts
 

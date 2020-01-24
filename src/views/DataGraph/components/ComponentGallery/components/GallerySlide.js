@@ -3,7 +3,6 @@ import handleBuildComponent from "../../../../../utilities/buildDashboardCompone
 import ComponentWrapper from "../../../../../SharedComponents/ComponentWrapper";
 import { Transition, Segment } from "semantic-ui-react"
 
-// Converted to functional component without state
 const GallerySlide = (props) => {
 
     const { component, centerVisible, animationDirection } = props;

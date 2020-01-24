@@ -124,7 +124,7 @@ function getRandomInt(max) {
 // The below intiialstate should be equal to a util, one that async fetches this list of nodes and edges. 
 
 const initialState = {
-    graphToDisplay: {
+    displayedGraph: {
         "nodes": [],
         "edges": []
     }
@@ -135,7 +135,7 @@ export default function (state = initialState, action) {
         case INIT_GRAPH: {
             state = {
                 ...state,
-                graphToDisplay: {
+                displayedGraph: {
                     nodes: [
                         action.payload.newNode.node
                     ],
@@ -147,12 +147,12 @@ export default function (state = initialState, action) {
         case ADD_NODE: {
             state = {
                 ...state,
-                graphToDisplay: {
+                displayedGraph: {
                     nodes: [
-                        ...state.graphToDisplay.nodes, action.payload.newNode.node
+                        ...state.displayedGraph.nodes, action.payload.newNode.node
                     ],
                     edges: [
-                        ...state.graphToDisplay.edges, action.payload.newNode.edge
+                        ...state.displayedGraph.edges, action.payload.newNode.edge
                     ],
                 }
             };
@@ -161,12 +161,12 @@ export default function (state = initialState, action) {
         case REMOVE_NODE: {
             state = {
                 ...state,
-                graphToDisplay: {
+                displayedGraph: {
                     nodes: [
-                        ...state.graphToDisplay.nodes.filter(node => node.id != action.payload.nodeToRemove.id)
+                        ...state.displayedGraph.nodes.filter(node => node.id != action.payload.nodeToRemove.id)
                     ],
                     edges: [
-                        ...state.graphToDisplay.edges.filter(edge => edge.source != action.payload.nodeToRemove.id && edge.target != action.payload.nodeToRemove.id)
+                        ...state.displayedGraph.edges.filter(edge => edge.source != action.payload.nodeToRemove.id && edge.target != action.payload.nodeToRemove.id)
                     ],
                 }
             };
@@ -175,9 +175,9 @@ export default function (state = initialState, action) {
         case UPDATE_NODE: {
             state = {
                 ...state,
-                graphToDisplay: {
+                displayedGraph: {
                     nodes: [
-                        ...state.graphToDisplay.nodes.filter(node => !action.payload.updatedNodes.some(child => node.id === child.id)),
+                        ...state.displayedGraph.nodes.filter(node => !action.payload.updatedNodes.some(child => node.id === child.id)),
                         ...action.payload.updatedNodes
                     ],
                 }

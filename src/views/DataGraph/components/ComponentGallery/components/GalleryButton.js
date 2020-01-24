@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Icon } from 'semantic-ui-react'
 
-// Converted to functional component without state
 const GalleryButtons = (props) => {
     return (
         <div>

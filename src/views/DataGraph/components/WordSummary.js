@@ -12,17 +12,17 @@ class NodeSummary extends React.Component {
         super(props)
         this.state = {
             visible: this.props.visible,
-            isLoading: true,
+            loadingState: true,
             data: "",
             dashboardComponents: []
         }
     }
 
-    // This function also deletes child nodes and edges (tree shake orphans).
+    // This function also deletes child nodes and edges.
     handleDeleteNode = (incomingNode) => {
-        const edgesToRemove = this.props.dashboardGraph.graphToDisplay.edges.filter(edge => edge.source === incomingNode.id)
+        const edgesToRemove = this.props.dashboardGraph.displayedGraph.edges.filter(edge => edge.source === incomingNode.id)
         let nodesToRemove = []
-        edgesToRemove.forEach(edge => nodesToRemove = [...nodesToRemove, ...this.props.dashboardGraph.graphToDisplay.nodes.filter(node => node.id === edge.target)])
+        edgesToRemove.forEach(edge => nodesToRemove = [...nodesToRemove, ...this.props.dashboardGraph.displayedGraph.nodes.filter(node => node.id === edge.target)])
         this.props.removeNode(incomingNode)
         if (nodesToRemove.length > 0) {
             nodesToRemove.forEach(node => this.handleDeleteNode(node))
@@ -36,16 +36,14 @@ class NodeSummary extends React.Component {
             {
                 visible: this.props.visible,
                 data: this.props.data,
-                editMode: this.props.editMode
+                treeLayout: this.props.treeLayout
             }
-
         )
-        console.log("HEY YOU OVER HERE", this.props.data)
     }
 
     render() {
 
-        const { data, editMode } = this.state;
+        const { data, treeLayout } = this.state;
         return (
             < Segment inverted style={{
                 position: "fixed",
@@ -67,7 +65,7 @@ class NodeSummary extends React.Component {
 
                     <Divider horizontal />
                     <ComponentGallery data={this.props.dashboardComponents}></ComponentGallery>
-                    {data.id != 'customer' && editMode ?
+                    {data.id != 'customer' && treeLayout ?
                         <>
                             <Divider />
                             <DeleteModal

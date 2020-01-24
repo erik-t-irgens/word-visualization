@@ -9,21 +9,21 @@ class SingleStatistic extends React.Component {
         super(props)
         this.state = {
             data: [],
-            isLoading: true,
+            loadingState: true,
         }
     }
 
     componentDidMount() {
-        this.setState({ isLoading: false, data: this.props.data })
+        this.setState({ loadingState: false, data: this.props.data })
 
     }
 
     render() {
         const { color } = this.props;
-        const { data, isLoading } = this.state;
+        const { data, loadingState } = this.state;
         return (
             <>
-                {!isLoading ?
+                {!loadingState ?
 
                     <Statistic inverted size='huge' color={color} style={{ height: '100%', marginTop: '5em' }}>
                         <Statistic.Value>{data.value}</Statistic.Value>

@@ -117,7 +117,6 @@ const handleBuildTutorialSlide = (pageNumber) => {
     }
 }
 
-// Converted to functional component without state
 const TutorialSlide = (props) => {
 
     const { centerVisible, animationDirection, currentPage } = props;

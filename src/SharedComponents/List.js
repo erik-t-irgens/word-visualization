@@ -9,12 +9,12 @@ class SingleStatistic extends React.Component {
         super(props)
         this.state = {
             data: [],
-            isLoading: true,
+            loadingState: true,
         }
     }
 
     componentDidMount() {
-        this.setState({ isLoading: false, data: this.props.data })
+        this.setState({ loadingState: false, data: this.props.data })
 
     }
 
@@ -31,10 +31,10 @@ class SingleStatistic extends React.Component {
 
     render() {
         const { color } = this.props;
-        const { data, isLoading } = this.state;
+        const { data, loadingState } = this.state;
         return (
             <>
-                {!isLoading ?
+                {!loadingState ?
                     <div style={{ overflow: 'auto', height: '100%' }}>
                         <Table inverted celled padded color={color} style={{ overflow: 'auto' }}>
                             <Table.Header>
