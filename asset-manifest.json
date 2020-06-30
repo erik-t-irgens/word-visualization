@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/word-visualization/static/css/main.8a6d4ce7.chunk.css",
+    "main.js": "/word-visualization/static/js/main.10ec93cc.chunk.js",
+    "main.js.map": "/word-visualization/static/js/main.10ec93cc.chunk.js.map",
+    "runtime-main.js": "/word-visualization/static/js/runtime-main.508ff242.js",
+    "runtime-main.js.map": "/word-visualization/static/js/runtime-main.508ff242.js.map",
+    "static/css/2.c68e6902.chunk.css": "/word-visualization/static/css/2.c68e6902.chunk.css",
+    "static/js/2.16df756e.chunk.js": "/word-visualization/static/js/2.16df756e.chunk.js",
+    "static/js/2.16df756e.chunk.js.map": "/word-visualization/static/js/2.16df756e.chunk.js.map",
+    "index.html": "/word-visualization/index.html",
+    "precache-manifest.3226c12c46ebadd58fa907a821157bc4.js": "/word-visualization/precache-manifest.3226c12c46ebadd58fa907a821157bc4.js",
+    "service-worker.js": "/word-visualization/service-worker.js",
+    "static/css/2.c68e6902.chunk.css.map": "/word-visualization/static/css/2.c68e6902.chunk.css.map",
+    "static/css/main.8a6d4ce7.chunk.css.map": "/word-visualization/static/css/main.8a6d4ce7.chunk.css.map",
+    "static/js/2.16df756e.chunk.js.LICENSE": "/word-visualization/static/js/2.16df756e.chunk.js.LICENSE",
+    "static/media/semantic.min.css": "/word-visualization/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.508ff242.js",
+    "static/css/2.c68e6902.chunk.css",
+    "static/js/2.16df756e.chunk.js",
+    "static/css/main.8a6d4ce7.chunk.css",
+    "static/js/main.10ec93cc.chunk.js"
+  ]
+}
